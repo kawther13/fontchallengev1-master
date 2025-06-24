@@ -1,0 +1,43 @@
+<div class="add-transaction-container">
+  <h2 class="transaction-title">Sales Transaction Info</h2>
+
+  <form (ngSubmit)="onSubmit()" #form="ngForm">
+    <input type="text" placeholder="Nom" [(ngModel)]="transaction.nom" name="nom" required>
+
+    <select [(ngModel)]="transaction.sellerRole" name="sellerRole" required>
+      <option value="" disabled selected>Rôle du vendeur</option>
+      <option value="AGENT">Agent</option>
+      <option value="COMMERCIAL">Commercial</option>
+      
+    </select>
+
+    <input type="text" placeholder="Pack Type" [(ngModel)]="transaction.packtype" name="packtype">
+
+    <select [(ngModel)]="transaction.product" name="product">
+      <option value="" disabled selected>Produit</option>
+      <option *ngFor="let p of productTypes" [value]="p">{{ p }}</option>
+    </select>
+
+    <select [(ngModel)]="transaction.contractType" name="contractType">
+      <option value="" disabled selected>Type de contrat</option>
+      <option *ngFor="let c of contractTypes" [value]="c">{{ c }}</option>
+    </select>
+
+    <select [(ngModel)]="transaction.transactionNature" name="transactionNature">
+      <option value="" disabled selected>Nature transaction</option>
+      <option *ngFor="let n of transactionNatures" [value]="n">{{ n }}</option>
+    </select>
+
+    <input type="number" placeholder="Nombre de contrats" [(ngModel)]="transaction.nbrContrat" name="nbrContrat" required>
+
+    <input type="number" placeholder="Prime encaissée" [(ngModel)]="transaction.prime" name="prime" required>
+
+    <input type="text" placeholder="Agence" [(ngModel)]="transaction.nomAgence" name="nomAgence" [disabled]="transaction.sellerRole!=='COMMERCIAL'">
+
+    <input type="text" placeholder="Région" [(ngModel)]="transaction.nomRegion" name="nomRegion">
+
+    <input type="date" [(ngModel)]="transaction.dateTransaction" name="dateTransaction" required>
+
+    <button class="submit-btn" type="submit">Ajouter Transaction</button>
+  </form>
+</div>

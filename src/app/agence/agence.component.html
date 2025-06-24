@@ -1,0 +1,87 @@
+<div class="container">
+  <h4>Gestion des Agences</h4>
+
+  <form [formGroup]="agenceForm" (ngSubmit)="onSubmit()">
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Code Agence</mat-label>
+      <input matInput type="number" formControlName="codeAgence" placeholder="Entrer le code agence">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Mail</mat-label>
+      <input matInput type="email" formControlName="mail" placeholder="Entrer l'email">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Type Agence</mat-label>
+      <input matInput formControlName="typeAgence" placeholder="Entrer le type d'agence">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Nom de l'agence</mat-label>
+      <input matInput formControlName="nom" placeholder="Entrer le nom">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Région</mat-label>
+      <mat-select formControlName="regionId" required>
+        <mat-option *ngFor="let region of regions" [value]="region.id">
+          {{ region.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="agenceForm.invalid">
+      {{ selectedAgenceId ? 'Modifier' : 'Ajouter' }}
+    </button>
+    <button mat-button type="button" (click)="resetForm()" *ngIf="selectedAgenceId">Annuler</button>
+  </form>
+
+  <p class="message" *ngIf="message">{{ message }}</p>
+
+  <h5>Liste des Agences</h5>
+  <table mat-table [dataSource]="agences" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let agence">{{ agence.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="codeAgence">
+      <th mat-header-cell *matHeaderCellDef>Code</th>
+      <td mat-cell *matCellDef="let agence">{{ agence.codeAgence }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="mail">
+      <th mat-header-cell *matHeaderCellDef>Mail</th>
+      <td mat-cell *matCellDef="let agence">{{ agence.mail }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="typeAgence">
+      <th mat-header-cell *matHeaderCellDef>Type</th>
+      <td mat-cell *matCellDef="let agence">{{ agence.typeAgence }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell *matHeaderCellDef>Nom</th>
+      <td mat-cell *matCellDef="let agence">{{ agence.nom }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="region">
+      <th mat-header-cell *matHeaderCellDef>Région</th>
+      <td mat-cell *matCellDef="let agence">{{ agence.region?.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let agence">
+        <button mat-button color="accent" (click)="editAgence(agence)">Modifier</button>
+        <button mat-button color="warn" (click)="deleteAgence(agence.id!)">Supprimer</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

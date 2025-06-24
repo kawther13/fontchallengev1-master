@@ -1,0 +1,118 @@
+<div class="container">
+  <h5>Créer une Condition</h5>
+
+  <form [formGroup]="conditionForm" (ngSubmit)="onSubmit()">
+
+    <!-- Type de Contrat -->
+    <mat-form-field class="full-width">
+      <mat-label>Type de Contrat</mat-label>
+      <input matInput formControlName="typeContrat" required>
+    </mat-form-field>
+
+    <!-- Prime -->
+    <mat-form-field class="full-width">
+      <mat-label>Prime</mat-label>
+      <input matInput type="number" formControlName="prime" required>
+    </mat-form-field>
+
+    <!-- Sélectionner un Produit -->
+    <mat-form-field class="full-width">
+      <mat-label>Sélectionner un Produit</mat-label>
+      <mat-select formControlName="produit" (selectionChange)="onProduitChange($event)">
+        <mat-option *ngFor="let produit of produits" [value]="produit">
+          {{ produit.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Packs du produit sélectionné -->
+    <div *ngIf="selectedProduit">
+      <h5>Packs du Produit : {{ selectedProduit.name }}</h5>
+
+      <mat-selection-list
+        [(ngModel)]="selectedPacks"
+        [ngModelOptions]="{standalone: true}"
+        [multiple]="true">
+        <mat-list-option *ngFor="let pack of selectedProduit.packs" [value]="pack">
+          {{ pack.name }}
+        </mat-list-option>
+      </mat-selection-list>
+
+      <!-- Boutons pour ajouter -->
+      <div style="margin-top: 10px;">
+        <button mat-raised-button color="primary" type="button" (click)="addProduit()">Ajouter Produit</button>
+        <button mat-raised-button color="accent" type="button" (click)="addPacks()">Ajouter Packs</button>
+      </div>
+    </div>
+ 
+    <!-- Produits ajoutés -->
+    <p>Produits ajoutés :</p>
+    <ul>
+      <li *ngFor="let produit of produitsAjoutes">
+        {{ produit.name }}
+      </li>
+    </ul>
+
+    <!-- Packs ajoutés -->
+    <p>Packs ajoutés :</p>
+    <ul>
+      <li *ngFor="let pack of packsAjoutes">
+        {{ pack.name }}
+      </li>
+    </ul>
+
+    <!-- Bouton Enregistrer -->
+    <button mat-raised-button color="primary" type="submit" [disabled]="conditionForm.invalid">Enregistrer</button>
+
+  </form>
+</div>
+<!-- Ton formulaire EXISTANT reste identique -->
+
+<hr>
+
+<hr>
+
+<h5>Liste des Conditions du Challenge :</h5>
+
+<table mat-table [dataSource]="conditions" class="mat-elevation-z8 full-width-table">
+
+  <!-- Type Contrat Column -->
+  <ng-container matColumnDef="typeContrat">
+    <th mat-header-cell *matHeaderCellDef> Type Contrat </th>
+    <td mat-cell *matCellDef="let condition"> {{ condition.typeContrat }} </td>
+  </ng-container>
+
+  <!-- Prime Column -->
+  <ng-container matColumnDef="prime">
+    <th mat-header-cell *matHeaderCellDef> Prime </th>
+    <td mat-cell *matCellDef="let condition"> {{ condition.prime }} </td>
+  </ng-container>
+
+  <!-- Packs Column -->
+  <ng-container matColumnDef="packs">
+    <th mat-header-cell *matHeaderCellDef> Packs </th>
+    <td mat-cell *matCellDef="let condition">
+      <ng-container *ngIf="condition.packs && condition.packs.length > 0; else noPacks">
+        <span *ngFor="let pack of condition.packs; let last = last">
+          {{ pack.name }}<span *ngIf="!last">, </span>
+        </span>
+      </ng-container>
+      <ng-template #noPacks>-</ng-template>
+    </td>
+  </ng-container>
+
+  <!-- Actions Column -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let condition">
+      <button mat-icon-button color="primary" (click)="editCondition(condition)"><mat-icon>edit</mat-icon></button>
+      <button mat-icon-button color="warn" (click)="deleteCondition(condition.id)"><mat-icon>delete</mat-icon></button>
+    </td>
+  </ng-container>
+
+  <!-- Header and Row Declarations -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<p *ngIf="conditions.length === 0">Aucune condition pour ce challenge.</p>

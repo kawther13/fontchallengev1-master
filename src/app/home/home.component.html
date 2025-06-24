@@ -1,0 +1,42 @@
+<div class="home-container">
+    <!-- Barre latérale -->
+    <aside class="sidebar">
+      <div class="logout-section">
+        <!-- Image cliquable pour déconnexion -->
+        <img src="../../assets/image.png"  class="logout-img"  />
+      </div>
+  
+      <nav class="nav-links">
+        <button class="nav-btn" routerLink="/register">Dashboard</button>
+         <!--<button class="nav-btn" routerLink="/home/ajouterpar" >Particiant</button>-->
+       <button class="nav-btn" routerLink="/home/list" >Les Challenges</button>
+        <button class="nav-btn" routerLink="/home/agence">Agence  </button>
+        <button class="nav-btn" routerLink="/home/region">Region   </button>
+        <button class="nav-btn" routerLink="/home/listP">Produit  </button>
+        <div class="dropdown-container">
+          <button class="nav-btn dropdown-toggle">
+            <i class="fa fa-user"></i> Users <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-menu">
+            <a routerLink="/home/userlist" routerLinkActive="active">Users List</a>
+            <a routerLink="/home/userajou" routerLinkActive="active">Add User</a>
+          </div>
+        </div>
+      </nav>
+      
+    </aside>
+  
+    <!-- Contenu principal -->
+    <main class="main-content">
+      <!-- Bouton Se connecter en haut à droite -->
+      <div class="top-right">
+        <button class="connect-btn"  (click)="logout()">déconnecter</button>
+      </div>
+  
+      
+      <!-- Contenu ici -->
+       <router-outlet></router-outlet>
+    </main>
+   
+  </div>
+  

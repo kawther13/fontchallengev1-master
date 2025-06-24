@@ -1,0 +1,49 @@
+.condition-container {
+  max-width: 500px;
+  margin: 40px auto;
+}
+
+.condition-card {
+  padding: 30px;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.pack-section {
+  margin-top: 20px;
+}
+
+.button-group {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lists-section {
+  margin-top: 30px;
+}
+
+.submit-button {
+  margin-top: 30px;
+  text-align: right;
+}
+.full-width-table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th.mat-header-cell, td.mat-cell {
+  padding: 8px;
+}
+
+button {
+  margin-right: 5px;
+}

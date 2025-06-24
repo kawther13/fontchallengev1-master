@@ -1,0 +1,55 @@
+<div class="create-challenge-container">
+  <mat-card class="challenge-card">
+    <mat-card-header>
+      <mat-card-title>Créer un Challenge</mat-card-title>
+      <mat-card-subtitle>Remplissez les informations ci-dessous</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="challengeForm" (ngSubmit)="onSubmit()">
+
+        <!-- Nom -->
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Nom du Challenge</mat-label>
+          <input matInput placeholder="Ex: Challenge Printemps" formControlName="name" required>
+        </mat-form-field>
+
+        <!-- Dates -->
+        <div class="date-row">
+          <mat-form-field appearance="fill" class="half-width">
+            <mat-label>Date de Début</mat-label>
+            <input matInput type="date" formControlName="dateDebut" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="half-width">
+            <mat-label>Date de Fin</mat-label>
+            <input matInput type="date" formControlName="dateFin" required>
+          </mat-form-field>
+        </div>
+
+        <!-- Description -->
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description" rows="1"></textarea>
+        </mat-form-field>
+
+        <!-- Concerners -->
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Sélectionner les Concerners</mat-label>
+          <mat-select formControlName="concerners" multiple>
+            <mat-option *ngFor="let c of availableConcerners" [value]="c.id">
+              {{ c.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]="challengeForm.invalid">
+            Enregistrer le Challenge
+          </button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

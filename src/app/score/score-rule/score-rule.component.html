@@ -1,0 +1,92 @@
+<form [formGroup]="scoreForm" (ngSubmit)="onSubmit()" class="score-form">
+  <!-- Type de Score -->
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Type de Score</mat-label>
+    <mat-select formControlName="typeScore" (selectionChange)="onTypeChange($event.value)">
+      <mat-option value="pack">Pack</mat-option>
+      <mat-option value="revenu">Revenu</mat-option>
+      <mat-option value="typeContrat">Type de Contrat</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Champ conditionnel -->
+  <mat-form-field *ngIf="selectedType === 'pack'" appearance="fill" class="full-width">
+    <mat-label>Pack</mat-label>
+    <input matInput formControlName="pack">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="selectedType === 'revenu'" appearance="fill" class="full-width">
+    <mat-label>Revenu</mat-label>
+    <input matInput type="number" formControlName="revenu">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="selectedType === 'typeContrat'" appearance="fill" class="full-width">
+    <mat-label>Type de Contrat</mat-label>
+    <input matInput formControlName="typeContrat">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Point</mat-label>
+    <input matInput type="number" formControlName="point">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">
+    {{ isEditMode ? 'Mettre à jour' : 'Ajouter' }}
+  </button>
+</form>
+
+<!-- ✅ Liste affichage -->
+<h3>Liste des Scores</h3>
+
+
+
+<table mat-table [dataSource]="scoreRules" class="mat-elevation-z8 w-full">
+
+  <!-- Type de Score -->
+  <ng-container matColumnDef="typeScore">
+    <th mat-header-cell *matHeaderCellDef>Type de Score</th>
+    <td mat-cell *matCellDef="let item">{{ item.typeScore }}</td>
+  </ng-container>
+
+  <!-- Pack -->
+  <ng-container matColumnDef="pack">
+    <th mat-header-cell *matHeaderCellDef>Pack</th>
+    <td mat-cell *matCellDef="let item">{{ item.pack || '-' }}</td>
+  </ng-container>
+
+  <!-- Revenu -->
+  <ng-container matColumnDef="revenu">
+    <th mat-header-cell *matHeaderCellDef>Revenu</th>
+    <td mat-cell *matCellDef="let item">{{ item.revenu || '-' }}</td>
+  </ng-container>
+
+  <!-- Type de Contrat -->
+  <ng-container matColumnDef="typeContrat">
+    <th mat-header-cell *matHeaderCellDef>Type de Contrat</th>
+    <td mat-cell *matCellDef="let item">{{ item.typeContrat || '-' }}</td>
+  </ng-container>
+
+  <!-- Point -->
+  <ng-container matColumnDef="point">
+    <th mat-header-cell *matHeaderCellDef>Point</th>
+    <td mat-cell *matCellDef="let item">{{ item.point }}</td>
+  </ng-container>
+
+  <!-- Actions -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let item">
+      <button mat-icon-button color="primary" (click)="editScore(item)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="deleteScore(item.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <!-- Header & Rows -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>

@@ -1,0 +1,38 @@
+
+<div class="login-container">
+  <div class="left-panel">
+    <!-- Message de succès -->
+<p class="success-message" *ngIf="successMessage">{{ successMessage }}</p>
+
+<!-- Message d'erreur -->
+<p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    <h2>LOGIN</h2>
+  
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <input formControlName="matricule" type="text" placeholder="Matricule" />
+
+      <div class="password-field">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          placeholder="PASSWORD"
+        />
+        <span (click)="togglePasswordVisibility()">
+          <i class="eye-icon">{{ showPassword ? '👁️' : '🙈' }}</i>
+        </span>
+      </div>
+
+      <a class="forgot-password" href="#">Forget Password?</a>
+
+      <button type="submit" [disabled]="loginForm.invalid">LOGIN</button>
+    </form>
+    <p class="terms">
+      By continuing, you are agreeing to our
+      <a href="#">terms & conditions</a> and our privacy policy.
+    </p>
+  </div>
+  <div class="right-panel">
+    <div class="star-shape"></div>
+  </div>
+</div>

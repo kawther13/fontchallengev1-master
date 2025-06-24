@@ -1,0 +1,140 @@
+<div class="container">
+  <h2>Find Ranking</h2>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Challenge Name</mat-label>
+    <input matInput [(ngModel)]="challengeName">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Type de Gagnant</mat-label>
+    <mat-select [(value)]="selectedType">
+      <mat-option value="agent">Agent</mat-option>
+      <mat-option value="commercial">Commercial</mat-option>
+      <mat-option value="chefAgence">Chef Agence</mat-option>
+      <mat-option value="chefRegion">Chef Région</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="onSearch()">See Ranking</button>
+
+  <!-- ✅ Tableau pour Agent & Commercial -->
+  <div *ngIf="(selectedType === 'agent' || selectedType === 'commercial') && dataSource.data.length">
+    <h3>▶ ListeGain{{ selectedType | titlecase }}</h3>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="rank">
+        <th mat-header-cell *matHeaderCellDef> item</th>
+        <td mat-cell *matCellDef="let e; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nbrContrat">
+        <th mat-header-cell *matHeaderCellDef> nbrContrat </th>
+        <td mat-cell *matCellDef="let e">{{ e.nbrContrat }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="typeContrat">
+        <th mat-header-cell *matHeaderCellDef> typeContrat </th>
+        <td mat-cell *matCellDef="let e">{{ e.typeContrat }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="prime">
+        <th mat-header-cell *matHeaderCellDef> prime </th>
+        <td mat-cell *matCellDef="let e">{{ e.prime }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="packs">
+        <th mat-header-cell *matHeaderCellDef> packs </th>
+        <td mat-cell *matCellDef="let e">{{ e.packs }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="produits">
+        <th mat-header-cell *matHeaderCellDef> produits </th>
+        <td mat-cell *matCellDef="let e">{{ e.produits }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nomRegion">
+        <th mat-header-cell *matHeaderCellDef> nomRegion </th>
+        <td mat-cell *matCellDef="let e">{{ e.nomRegion }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nameSale">
+        <th mat-header-cell *matHeaderCellDef> nameSale </th>
+        <td mat-cell *matCellDef="let e">{{ e.nameSale }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="typeAgence">
+        <th mat-header-cell *matHeaderCellDef> typeAgence </th>
+        <td mat-cell *matCellDef="let e">{{ e.typeAgence }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="agentColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: agentColumns;"></tr>
+    </table>
+  </div>
+
+  <!-- ✅ Tableau pour Chef Région -->
+  <div *ngIf="selectedType === 'chefRegion' && dataSource.data.length">
+    <h3>▶ ListeGainChefRegion</h3>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="rank">
+        <th mat-header-cell *matHeaderCellDef> item </th>
+        <td mat-cell *matCellDef="let e; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nbrContrat">
+        <th mat-header-cell *matHeaderCellDef> nbrContrat </th>
+        <td mat-cell *matCellDef="let e">{{ e.nbrContrat }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="prime">
+        <th mat-header-cell *matHeaderCellDef> prime </th>
+        <td mat-cell *matCellDef="let e">{{ e.prime }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nomRegion">
+        <th mat-header-cell *matHeaderCellDef> nomRegion </th>
+        <td mat-cell *matCellDef="let e">{{ e.nomRegion }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="chefRegionColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: chefRegionColumns;"></tr>
+    </table>
+  </div>
+
+  <!-- ✅ Tableau pour Chef Agence -->
+  <div *ngIf="selectedType === 'chefAgence' && dataSource.data.length">
+    <h3>▶ ListeGainChefAgence</h3>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="rank">
+        <th mat-header-cell *matHeaderCellDef> item </th>
+        <td mat-cell *matCellDef="let e; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nbrContrat">
+        <th mat-header-cell *matHeaderCellDef> nbrContrat </th>
+        <td mat-cell *matCellDef="let e">{{ e.nbrContrat }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="prime">
+        <th mat-header-cell *matHeaderCellDef> prime </th>
+        <td mat-cell *matCellDef="let e">{{ e.prime }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nomRegion">
+        <th mat-header-cell *matHeaderCellDef> nomRegion (Agence) </th>
+        <td mat-cell *matCellDef="let e">{{ e.nomRegion }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="typeAgence">
+        <th mat-header-cell *matHeaderCellDef> typeAgence </th>
+        <td mat-cell *matCellDef="let e">{{ e.typeAgence }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="chefAgenceColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: chefAgenceColumns;"></tr>
+    </table>
+  </div>
+</div>

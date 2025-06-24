@@ -1,0 +1,56 @@
+<div class="add-transaction-container">
+  <h2 class="transaction-title">Transactions par Challenge</h2>
+
+  <form (ngSubmit)="loadTransactions()" style="margin-bottom: 20px;">
+    <input
+      type="number"
+      [(ngModel)]="challengeId"
+      name="challengeId"
+      placeholder="Entrer ID du Challenge"
+      required
+    />
+    <button type="submit" class="submit-btn">Afficher Transactions</button>
+  </form>
+
+  <div *ngIf="isLoading">Chargement...</div>
+
+  <div class="table-wrapper" *ngIf="transactions.length > 0">
+    <table class="transaction-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Rôle</th>
+          <th>Produit</th>
+          <th>Contrat</th>
+          <th>Nature</th>
+          <th>Contrats</th>
+          <th>Prime</th>
+          <th>Agence</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tx of transactions">
+          <td>{{ tx.id }}</td>
+          <td>{{ tx.nom }}</td>
+          <td>{{ tx.sellerRole }}</td>
+          <td>{{ tx.product }}</td>
+          <td>{{ tx.contractType }}</td>
+          <td>{{ tx.transactionNature }}</td>
+          <td>{{ tx.nbrContrat }}</td>
+          <td>{{ tx.prime }}</td>
+          <td>{{ tx.nomAgence }}</td>
+          <td>{{ tx.dateTransaction }}</td>
+          <td>
+          <button class="btn-view" (click)="viewTransaction(tx.id)">👁</button>
+          <button class="btn-edit" (click)="editTransaction(tx.id)">✏️</button>
+          <button class="btn-delete" (click)="deleteTransaction(tx.id)">🗑</button>
+        </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p *ngIf="!isLoading && transactions.length === 0">Aucune transaction trouvée.</p>
+</div>

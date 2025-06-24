@@ -1,0 +1,25 @@
+<div class="form-container">
+  <h2>Modifier le Produit</h2>
+
+  <p class="message" *ngIf="message">{{ message }}</p>
+
+  <form [formGroup]="produitForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Nom du produit</mat-label>
+      <input matInput formControlName="name" placeholder="Nom du produit" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Choisir les packs</mat-label>
+      <mat-select formControlName="packs" multiple>
+        <mat-option *ngFor="let pack of allPacks" [value]="pack.id">
+          {{ pack.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="produitForm.invalid">
+      Mettre à jour
+    </button>
+  </form>
+</div>

@@ -1,0 +1,88 @@
+/* ===== CONTAINER PRINCIPAL ===== */
+.add-transaction-container {
+  background-color: #eaf8e6;
+  max-width: 950px;
+  margin: 30px auto;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+}
+
+/* ===== TITRE DU FORMULAIRE ===== */
+.transaction-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #006b50;
+  padding: 12px 0;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+/* ===== FORMULAIRE GRILLE ===== */
+form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 25px;
+}
+
+/* ===== INPUT ET SELECT ===== */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1.5px solid #ccc;
+  font-size: 15px;
+  font-weight: 500;
+  width: 100%;
+  color: #333; /* plus doux que noir */
+  background-color: #ffffff;
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+input:focus,
+select:focus {
+  border-color: #008060;
+  box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.2);
+  outline: none;
+}
+
+/* ===== PLACEHOLDER ===== */
+::placeholder {
+  color: #888;
+  font-style: italic;
+}
+
+/* ===== BOUTON SUBMIT ===== */
+.submit-btn {
+  grid-column: span 2;
+  padding: 14px;
+  background-color: #006b50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #004b3a;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  form {
+    grid-template-columns: 1fr;
+  }
+
+  .submit-btn {
+    grid-column: span 1;
+  }
+}

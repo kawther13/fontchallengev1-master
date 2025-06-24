@@ -1,0 +1,136 @@
+<mat-card class="max-w-6xl mx-auto p-6">
+  <h2 class="text-2xl font-bold mb-4 text-green-800">Détails du Challenge</h2>
+
+  <p><strong>Nom :</strong> {{ challenge.name }}</p>
+  <p><strong>Date Début :</strong> {{ challenge.dateDebut }}</p>
+  <p><strong>Date Fin :</strong> {{ challenge.dateFin }}</p>
+  <p><strong>Description :</strong> {{ challenge.description }}</p>
+
+  <mat-divider class="my-4"></mat-divider>
+
+  <!-- Score Rules -->
+  <h3 class="text-xl font-bold text-blue-700 mt-6">Score Rules</h3>
+  <mat-list *ngIf="challenge.scorerule.length > 0; else noScoreRules">
+    <mat-list-item *ngFor="let s of challenge.scorerule">
+      <strong>Type :</strong> {{ s.typeScore }},
+      <span *ngIf="s.typeScore === 'pack'">Pack : {{ s.pack }}</span>
+      <span *ngIf="s.typeScore === 'revenu'">Revenu : {{ s.revenu }}</span>
+      <span *ngIf="s.typeScore === 'typeContrat'">Type Contrat : {{ s.typeContrat }}</span>,
+      <strong>Point :</strong> {{ s.point }}
+    </mat-list-item>
+  </mat-list>
+  <ng-template #noScoreRules><p>Aucun Score Rule.</p></ng-template>
+
+  <mat-divider class="my-4"></mat-divider>
+
+  <!-- Concerners -->
+  <h3 class="text-xl font-bold text-purple-700 mt-6">Concerners</h3>
+  <mat-list *ngIf="challenge.concerners.length > 0; else noConcerners">
+    <mat-list-item *ngFor="let c of challenge.concerners">
+      {{ c.name }}
+    </mat-list-item>
+  </mat-list>
+  <ng-template #noConcerners><p>Aucun Concerner.</p></ng-template>
+
+  <mat-divider class="my-4"></mat-divider>
+
+ <!-- ✅ Conditions -->
+<h3 class="text-xl font-bold text-pink-700 mt-6">Conditions</h3>
+
+<mat-list *ngIf="challenge.condition.length > 0; else noConditions">
+  <mat-list-item *ngFor="let cond of challenge.condition">
+    <p>Type Contrat : {{ cond.typeContrat }}, Prime : {{ cond.prime }}</p>
+
+    <!-- ✅ Produits + packs du produit -->
+    <p class="font-semibold text-blue-700">Produits :</p>
+    <mat-list dense>
+      <mat-list-item *ngFor="let produit of cond.produits">
+        📦 <strong>{{ produit.name }}</strong>
+
+        <mat-list dense class="ml-6" *ngIf="produit.packs?.length > 0">
+          <mat-list-item *ngFor="let pack of produit.packs">
+            ➤ {{ pack.name }}
+          </mat-list-item>
+        </mat-list>
+      </mat-list-item>
+    </mat-list>
+
+    <!-- ✅ Packs globaux -->
+    <p class="font-semibold text-purple-700 mt-4">Packs (globaux) :</p>
+    <mat-list dense>
+      <mat-list-item *ngFor="let pack of cond.produitPacks">
+        📦 {{ pack.pack.name }}
+      </mat-list-item>
+    </mat-list>
+
+  </mat-list-item>
+</mat-list>
+
+<ng-template #noConditions>
+  <p class="text-gray-500">Aucune Condition.</p>
+</ng-template>
+
+
+
+<mat-divider class="my-4"></mat-divider>
+<br>
+<br>
+
+  <!-- Conditions Gain -->
+  <h3 class="text-xl font-bold text-green-700 mt-6">Conditions de Gain</h3>
+  <mat-list *ngIf="challenge.conditionGains.length > 0; else noConditionGains">
+    <mat-list-item *ngFor="let cg of challenge.conditionGains">
+      Rôle : {{ cg.role }}, Type Contrat : {{ cg.typeContrat }}, Nombre Contrat : {{ cg.nbrContrat }}, Prime : {{ cg.prime }}
+    </mat-list-item>
+  </mat-list>
+  <ng-template #noConditionGains><p>Aucune Condition de Gain.</p></ng-template>
+
+  <mat-divider class="my-4"></mat-divider>
+
+ <!-- ✅ Rôles & Paliers -->
+<h3 class="text-xl font-bold text-yellow-700 mt-6">Rôles & Paliers</h3>
+
+<mat-accordion *ngIf="challenge.rolePaliers.length > 0; else noRolePaliers">
+  <mat-expansion-panel *ngFor="let rp of challenge.rolePaliers">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Rôle : {{ rp.role }} — Type Gain : {{ rp.typeGain }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <!-- ✅ Paliers Classement -->
+    <div *ngIf="rp.palierClassements.length > 0">
+      <p class="font-semibold text-blue-700">Paliers Classement :</p>
+      <mat-list dense>
+        <mat-list-item *ngFor="let pc of rp.palierClassements">
+          • Nbr : {{ pc.nbr }}, Montant : {{ pc.montant | number:'1.0-2' }}
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+    <!-- ✅ Paliers Intervalle -->
+    <div *ngIf="rp.palierIntervalles.length > 0">
+      <p class="font-semibold text-purple-700">Paliers Intervalle :</p>
+      <mat-list dense>
+        <mat-list-item *ngFor="let pi of rp.palierIntervalles">
+          • Min : {{ pi.min }}, Max : {{ pi.max }}, Montant : {{ pi.montant | number:'1.0-2' }}
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+    <!-- ✅ Commissions -->
+    <div *ngIf="rp.commissions.length > 0">
+      <p class="font-semibold text-green-700">Commissions :</p>
+      <mat-list dense>
+        <mat-list-item *ngFor="let co of rp.commissions">
+          • Min : {{ co.min }}, Max : {{ co.max }}, Pourcentage : {{ co.pourcentage | percent:'1.0-2':'fr' }}
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+  </mat-expansion-panel>
+</mat-accordion>
+
+<ng-template #noRolePaliers>
+  <p class="text-gray-500">Aucun rôle palier disponible.</p>
+</ng-template>

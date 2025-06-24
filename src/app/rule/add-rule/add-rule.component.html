@@ -1,0 +1,79 @@
+<!-- FORMULAIRE AJOUT / MODIFICATION -->
+<div class="p-4 bg-gray-50 rounded-md shadow mt-6 max-w-5xl mx-auto">
+  <h2 class="text-xl font-semibold text-green-700 mb-4">
+    {{ editingRuleId ? 'Modifier Rule' : 'Ajouter une Rule' }}
+  </h2>
+
+  <div class="grid grid-cols-3 gap-3 mb-4">
+    <input
+      type="text"
+      [(ngModel)]="rule.contractType"
+      placeholder="Type de contrat"
+      class="border border-gray-300 p-2 rounded"
+    />
+
+    <input
+      type="text"
+      [(ngModel)]="rule.transactionNature"
+      placeholder="Nature de transaction"
+      class="border border-gray-300 p-2 rounded"
+    />
+
+    <input
+      type="text"
+      [(ngModel)]="rule.packType"
+      placeholder="Type de pack"
+      class="border border-gray-300 p-2 rounded"
+    />
+  </div>
+
+  <div class="flex gap-3">
+    <button
+      (click)="addOrUpdateRule()"
+      class="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800">
+      {{ editingRuleId ? 'Mettre à jour' : 'Ajouter' }}
+    </button>
+
+    <button
+      *ngIf="editingRuleId"
+      (click)="resetForm()"
+      class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">
+      Annuler
+    </button>
+  </div>
+</div>
+
+<!-- TABLEAU DES RÈGLES -->
+<div *ngIf="rules.length > 0" class="mt-6 max-w-5xl mx-auto">
+  <h3 class="text-lg font-bold text-green-800 mb-4">Règles enregistrées</h3>
+
+  <table class="w-full border border-gray-200 rounded overflow-hidden shadow">
+    <thead class="bg-gray-100 text-left">
+      <tr>
+        <th class="p-3">Contrat</th>
+        <th class="p-3">Transaction</th>
+        <th class="p-3">Pack</th>
+        <th class="p-3">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of rules" class="border-t hover:bg-gray-50">
+        <td class="p-3">{{ r.contractType }}</td>
+        <td class="p-3">{{ r.transactionNature }}</td>
+        <td class="p-3">{{ r.packType }}</td>
+        <td class="p-3">
+          <button
+            (click)="editRule(r)"
+            class="text-blue-600 hover:underline mr-4">
+            Modifier
+          </button>
+          <button
+            (click)="deleteRule(r.id)"
+            class="text-red-600 hover:underline">
+            Supprimer
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
