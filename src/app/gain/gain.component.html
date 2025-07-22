@@ -1,0 +1,96 @@
+<div class="card shadow-sm m-4 p-4">
+  <!-- En-tête -->
+  <div class="d-flex align-items-center gap-2 mb-3">
+    <i class="bi bi-bullseye text-primary fs-4"></i>
+    <h4 class="mb-0"> les Gains</h4>
+  </div>
+
+  <!-- Formulaire compact -->
+  <form class="row gx-2 gy-2 align-items-center mb-3" (ngSubmit)="rechercherGain()">
+    <div class="col-auto">
+      <label for="challengeName" class="visually-hidden">Nom du challenge</label>
+      <input
+        type="text"
+        id="challengeName"
+        name="challengeName"
+        [(ngModel)]="challengeName"
+        required
+        class="form-control form-control-sm"
+        placeholder="Nom du challenge"
+      />
+    </div>
+
+    <div class="col-auto">
+      <label for="selectedRole" class="visually-hidden">Rôle</label>
+      <select
+        id="selectedRole"
+        name="selectedRole"
+        [(ngModel)]="selectedRole"
+        required
+        class="form-select form-select-sm"
+      >
+        <option value="">Rôle</option>
+        <option value="AGENT">Agent</option>
+        <option value="SALARIE">Salarié</option>
+        <option value="CHEF_AGENCE">Chef d'agence</option>
+        <option value="CHEF_REGION">Chef de région</option>
+      </select>
+    </div>
+
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary btn-sm">
+        <i class="bi bi-search me-1"></i> Afficher
+      </button>
+    </div>
+  </form>
+
+  <!-- Spinner -->
+  <div *ngIf="loading" class="text-center my-3">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Erreur -->
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <!-- Tableau Bootstrap -->
+  <div *ngIf="dataSource.data.length > 0" class="table-responsive">
+    <!-- Titre en option -->
+    <!-- <h5 class="mb-3">📋 Résultats - {{ selectedRole.replace('_', ' ') }} ({{ dataSource.data.length }} participants)</h5> -->
+
+    <table class="table table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>Nom</th>
+          <th>Code</th>
+          <th>Email</th>
+          <th>Agence</th>
+          <th>Région</th>
+          <th>Contrats</th>
+          <th>Prime</th>
+          <th>Score</th>
+          <th>Rang</th>
+          <th>Gain (DT)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let element of dataSource.filteredData">
+          <td>{{ element.nom }}</td>
+          <td>{{ element.codePar }}</td>
+          <td>{{ element.email }}</td>
+          <td>{{ element.agence }}</td>
+          <td>{{ element.region }}</td>
+          <td>{{ element.nombreContrats }}</td>
+          <td>{{ element.totalPrime | number:'1.2-2' }}</td>
+          <td>{{ element.score }}</td>
+          <td>{{ element.rang }}</td>
+          <td><strong class="text-success">{{ element.gain | number:'1.2-2' }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Paginator conservé -->
+    <mat-paginator [pageSizeOptions]="[1, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

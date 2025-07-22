@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { RolePalierService } from '../service/role-palier.service';
 import { PalierClassementService } from '../service/palier-classement.service';
@@ -35,8 +35,8 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './role-palier.component.css'
 })
 export class RolePalierComponent {
-
-challengeId: number | null = null;
+@Input() challengeId!: number;
+//challengeId: number | null = null;
 
   rolePalier: RolePaliers = {
     role: '',
@@ -60,7 +60,7 @@ challengeId: number | null = null;
   ) {}
 
   ngOnInit(): void {
-    this.challengeId = this.challengeService.getChallengeId();
+  //  this.challengeId = this.challengeService.getChallengeId();
     this.loadRolePaliers();
   }
 

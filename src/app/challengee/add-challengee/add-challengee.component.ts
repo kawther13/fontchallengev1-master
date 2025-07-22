@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Concerner } from '../../models/concerner';
 
@@ -13,6 +13,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { Challenge } from '../../models/challenge';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogRef } from '@angular/material/dialog';
+
 @Component({
   selector: 'app-add-challengee',
   standalone: true,
@@ -27,7 +30,12 @@ import { Challenge } from '../../models/challenge';
     ReactiveFormsModule,
     // autres modules Angular Material
     MatCardModule,  
-    ],
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatIconModule,
+    MatButtonModule,
+    ReactiveFormsModule,],
   templateUrl: './add-challengee.component.html',
   styleUrl: './add-challengee.component.css'
 })
@@ -35,12 +43,13 @@ export class AddChallengeeComponent {
 
  challengeForm!: FormGroup;
   availableConcerners: Concerner[] = [];   // ✅ Typé
-
+@Output() challengeCreated = new EventEmitter<number>();
   constructor(
     private fb: FormBuilder,
     private challengeService: ChallengeService,
     private concernerService: ConcernerService,
-    private router: Router
+    private router: Router,
+     private dialogRef: MatDialogRef<AddChallengeeComponent>
   ) {}
 
   ngOnInit(): void {
@@ -75,7 +84,8 @@ export class AddChallengeeComponent {
         
         alert("Challenge ajouté avec succès !");
         this.challengeForm.reset();
-       this.router.navigate(['home/add', response.id]);
+         this.challengeCreated.emit(response.id);
+       //this.router.navigate(['home/add', response.id]);
  // ✅ Utilise 'this.router'
       },
       error: (err) => {
@@ -86,4 +96,7 @@ export class AddChallengeeComponent {
   }
 }
 
+onCancel(): void {
+  this.dialogRef.close(); // Ferme simplement le dialog sans retourner de données
+}
 }

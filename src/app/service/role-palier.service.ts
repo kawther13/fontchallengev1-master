@@ -14,7 +14,9 @@ export class RolePalierService {
   constructor(private http: HttpClient) {}
 
   addRolePalier(challengeId: number, data: RolePaliers): Observable<RolePaliers> {
+    console.log(data)
     return this.http.post<RolePaliers>(`${this.baseUrl}/${challengeId}`, data);
+   
   }
 
   getByChallenge(challengeId: number): Observable<RolePaliers[]> {

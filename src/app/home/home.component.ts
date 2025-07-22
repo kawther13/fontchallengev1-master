@@ -1,29 +1,74 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Chart } from 'chart.js/auto';
 
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink,CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-role: any
- ngOnInit():void{
-
-    //this.user= this._user.getuserDataFromToken();
-    const role = localStorage.getItem('role');
-    const  username=localStorage.getItem('username')
-  }
 constructor(private router :Router ){}
+role: string = '';
+  ngOnInit(): void {
+    this.role = localStorage.getItem('role') || '';
+  }
 
-  logout(){
+  ngAfterViewInit(): void {
+    this.toggleSidebar();
+   // this.createChart();
+  }
+
+  toggleSidebar() {
+    const hamburger = document.querySelector(".toggle-btn");
+    const toggle = document.querySelector("#icon");
+
+    hamburger?.addEventListener("click", () => {
+      document.querySelector("#sidebar")?.classList.toggle("expand");
+      toggle?.classList.toggle("bxs-chevrons-right");
+      toggle?.classList.toggle("bxs-chevrons-left");
+    });
+  }
+/*
+  createChart() {
+    new Chart(document.getElementById("bar-chart-grouped") as HTMLCanvasElement, {
+      type: 'bar',
+      data: {
+        labels: ["1900", "1950", "1999", "2050"],
+        datasets: [
+          {
+            label: "Africa",
+            backgroundColor: "#3e95cd",
+            data: [133, 221, 783, 2478]
+          },
+          {
+            label: "Europe",
+            backgroundColor: "#8e5ea2",
+            data: [408, 547, 675, 734]
+          }
+        ]
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'Population growth (millions)'
+          }
+        }
+      }
+    });
+  }*/
+   logout(){
  localStorage.removeItem('token');
  
   localStorage.removeItem('role');
+  localStorage.removeItem('userId');
+  localStorage.removeItem('username')
 this.router.navigate(['/login']).then(() => {
   setTimeout(() => {
     window.location.reload();

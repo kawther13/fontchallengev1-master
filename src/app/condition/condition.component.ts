@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Produit } from '../models/produit';
 import { Pack } from '../models/pack';
@@ -15,6 +15,7 @@ import { MatListModule } from '@angular/material/list';
 import { ActivatedRoute } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-condition',
@@ -27,14 +28,14 @@ import { MatIconModule } from '@angular/material/icon';
         MatButtonModule,
         MatListModule,
         MatListModule,
-         MatTableModule, MatIconModule
+         MatTableModule, MatIconModule,MatCardModule
   ],
   templateUrl: './condition.component.html',
   styleUrl: './condition.component.css'
 })
 export class ConditionComponent {
 displayedColumns: string[] = ['typeContrat', 'prime', 'packs', 'actions'];
-
+contratTypes = ['FORFAITAIRE', 'RENOUVELABLE','annuel'];
  conditionForm: FormGroup;
   produits: any[] = [];
 
@@ -43,12 +44,13 @@ displayedColumns: string[] = ['typeContrat', 'prime', 'packs', 'actions'];
 
   produitsAjoutes: any[] = [];
   packsAjoutes: any[] = [];
-  challengeId!: number;
+  //challengeId!: number;
 
   conditions: any[] = [];
 
   isEditMode = false;
   editingConditionId: number | null = null;
+@Input() challengeId!: number;
 
   constructor(
     private fb: FormBuilder,
@@ -66,8 +68,12 @@ displayedColumns: string[] = ['typeContrat', 'prime', 'packs', 'actions'];
 
   ngOnInit(): void {
     this.loadProduits();
-    this.challengeId = Number(this.route.snapshot.paramMap.get('id'));
+   // this.challengeId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadConditions();
+    if (!this.challengeId) {
+    console.warn("challengeId non reçu depuis le parent !");
+    return;
+  }
   }
 
   loadProduits() {

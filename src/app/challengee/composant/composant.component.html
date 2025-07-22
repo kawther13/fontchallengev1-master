@@ -3,18 +3,20 @@
 
 
 
-<app-condition *ngIf="challengeService.getChallengeId()" ></app-condition>
-<app-condition-gain *ngIf="challengeService.getChallengeId()"></app-condition-gain>
-<hr>
-<br>
-<br>
-<br>
-<br>
-<app-score-rule *ngIf="challengeService.getChallengeId()"></app-score-rule>
+<div class="container mt-4">
+  <!-- Condition -->
+  <app-condition *ngIf="challengeService.getChallengeId()"></app-condition>
 
-<hr>
-<br>
-<br>
-<br>
-<br>
-<app-role-palier *ngIf="challengeService.getChallengeId()"></app-role-palier>
+  <!-- Condition de Gain -->
+  <app-condition-gain *ngIf="challengeService.getChallengeId()"></app-condition-gain>
+
+  <hr class="my-4">
+
+  <!-- Règles de score -->
+  <app-score-rule *ngIf="challengeService.getChallengeId()"></app-score-rule>
+
+  <hr class="my-4">
+
+  <!-- Rôle Palier -->
+  <app-role-palier *ngIf="challengeService.getChallengeId()"></app-role-palier>
+</div>

@@ -48,8 +48,8 @@ successMessage = '';
 
           if (role === 'ADMIN') {
             this.router.navigate(['home/dashbordadmin']);
-          } else if (role === 'USER') {
-            this.router.navigate(['home/dashboard']);
+          } else if (role === 'SALARIE'|| role === 'AGENT') {
+            this.router.navigate(['home/dahpoPar']);
           } else {
             this.router.navigate(['/']);
           }

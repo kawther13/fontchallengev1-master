@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,10 +30,10 @@ scoreForm: FormGroup | any;
 selectedType: string | any;
 isEditMode = false;
 id: any;
-challengeId: number | any;
+//challengeId: number | any;
 scoreRules: any[] = []; // ✅ Liste pour affichage
 displayedColumns: string[] = ['typeScore', 'pack', 'revenu', 'typeContrat', 'point', 'actions'];
-
+@Input() challengeId!: number;
 constructor(
   private fb: FormBuilder,
   private scoreRuleService: ScoreRule1Service,
@@ -44,7 +44,7 @@ private challengeService: ChallengeService
 
 ngOnInit() {
   // ✅ Récupérer le challengeId depuis l'URL
- this.challengeId = this.challengeService.getChallengeId();
+ //this.challengeId = this.challengeService.getChallengeId();
 console.log(this.challengeId)
   // ✅ Construire le FormGroup sans challengeId direct : on l'ajoutera dans la requête
   this.scoreForm = this.fb.group({

@@ -1,1 +1,175 @@
-<p>dashbord-admin works!</p>
+ <!-- Contenido principal de la página -->
+<main class="content px-3 py-4">
+  <div class="container-fluid">
+
+    <!-- Titre du dashboard -->
+    <h3 class="fw-bold fs-4 mb-4">📊 Admin Dashboard</h3>
+
+<div class="row" *ngIf="challengesEnCours.length > 0; else aucunChallenge">
+  <div class="col-12 col-md-3 mb-4" *ngFor="let challenge of challengesEnCours">
+    <div class="card shadow">
+      <div class="card-hover card-body py-4">
+        <h6 class="mb-2 fw-bold">🏁 Challenge en cours</h6>
+
+        <!-- Nom du challenge -->
+        <p class="fw-bold mb-2 text-primary">
+          {{ challenge.name }}
+        </p>
+
+        <!-- Dates du challenge -->
+        <div class="mb-0">
+          <span class="badge bg-info text-dark me-2">📅</span>
+          <span class="fw-bold">
+            Du {{ challenge.dateDebut | date:'dd/MM/yyyy' }}
+            au {{ challenge.dateFin | date:'dd/MM/yyyy' }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #aucunChallenge>
+  <div class="col-12 col-md-3 mb-4">
+    <div class="card shadow">
+      <div class="card-hover card-body py-4 text-center">
+        <h6 class="mb-2 fw-bold">🏁 Challenge en cours</h6>
+        <p class="text-muted">Aucun challenge en cours</p>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<div class="container mt-4">
+ 
+
+ 
+<div class="container mt-4">
+  <h5 class="fw-bold mb-3">📊 Revenu par Challenge en Cours</h5>
+ <canvas
+  id="bar-challenge-chart"
+  width="300"
+  height="450">
+</canvas>
+</div>
+
+
+  <ng-template #noData>
+    <p class="text-muted">Aucun challenge en cours à afficher.</p>
+  </ng-template>
+</div>
+
+
+
+
+
+
+
+    <!-- Formulaire de recherche -->
+    <div class="input-group mb-2 w-50 mx-auto custom-search-group">
+  <input
+    type="text"
+    class="form-control "
+    [(ngModel)]="searchTerm"
+    placeholder="Nom du challenge..."
+    (focus)="inputFocused = true"
+    (blur)="inputFocused = false"
+  />
+  <button
+    class="btn"
+    [ngClass]="buttonClicked ? 'btn-success' : 'btn-primary'"
+    (click)="searchChallenge()"
+  >
+    Rechercher
+  </button>
+</div>
+
+
+    <!-- Résultats du challenge sélectionné -->
+    <div class="row" *ngIf="stats">
+      <!-- Agents Participants -->
+      <div class="col-12 col-md-3 mb-4">
+        <div class="card shadow">
+          <div class="card-hover card-body py-4">
+            <h6 class="mb-2 fw-bold">👥 Agents</h6>
+            <p class="fw-bold mb-2">{{ stats.nbAgents }}</p>
+            <div class="mb-0">
+              <span class="badge text-primary me-2">Total</span>
+              <span class="fw-bold">Participants</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Salariés Participants -->
+      <div class="col-12 col-md-3 mb-4">
+        <div class="card shadow">
+          <div class="card-hover card-body py-4">
+            <h6 class="mb-2 fw-bold">👨‍💼 Salariés</h6>
+            <p class="fw-bold mb-2">{{ stats.nbSalaries }}</p>
+            <div class="mb-0">
+              <span class="badge text-primary me-2">Total</span>
+              <span class="fw-bold">Participants</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contrats Totaux -->
+      <div class="col-12 col-md-3 mb-4">
+        <div class="card shadow">
+          <div class="card-hover card-body py-4">
+            <h6 class="mb-2 fw-bold">📄 Contrats</h6>
+            <p class="fw-bold mb-2">{{ stats.nbContrats }}</p>
+            <div class="mb-0">
+              <span class="badge bg-success text-white me-2">✔</span>
+              <span class="fw-bold">Total vendus</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Revenu Total -->
+      <div class="col-12 col-md-3 mb-4">
+        <div class="card shadow">
+          <div class="card-hover card-body py-4">
+            <h6 class="mb-2 fw-bold">💰 Revenu</h6>
+            <p class="fw-bold mb-2">{{ stats.revenuTotal }} TND</p>
+            <div class="mb-0">
+              <span class="badge bg-warning text-dark me-2">💸</span>
+              <span class="fw-bold">Chiffre d'affaires</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+
+
+                            <!-- Otra tarjeta -->
+                          
+                      
+
+                        <!-- Fila con tabla y gráfico -->
+                        <div class="row">
+                            
+
+                            <!-- Gráfico de informes -->
+                            <div class="col-12 col-md-5">
+                                <h3 class="fw-bold fs-4 my-3">
+                                    Reports Overview
+                                </h3>
+                                <!-- Gráfico de barras -->
+                                 <canvas id="bar-chart-grouped" width="300" height="450"></canvas>
+                            </div>
+
+
+                            
+                            
+                        </div>
+                  
+                      
+            

@@ -1,1 +1,83 @@
-<p>dashbord-user works!</p>
+ <!-- Contenido principal de la página -->
+            <main class="content px-3 py-4">
+                <div class="container-fluid">
+                    <div class="mb-3">
+                        <!-- Título de la sección del dashboard -->
+                        <h3 class="fw-bold fs-4 mb-3">
+                             Dashboard Participant
+                        </h3>
+
+                       <div class="row">
+  <div class="col-12 col-md-4 mb-4" *ngFor="let stat of challengeStats">
+    <div class="card shadow border-0 h-100">
+      <div class="card-body py-4">
+        <h6 class="mb-2 fw-bold text-uppercase text-secondary">
+          {{ stat.challengeName }}
+        </h6>
+        <p class="fw-bold mb-2 text-primary">
+          {{ stat.totalPrime  }}
+        </p>
+        <div class="mb-1">
+          <span class="badge bg-success me-2">
+            {{ stat.nombreContrats }} contrats
+          </span>
+          <span class="fw-bold text-muted">
+            Rang #{{ stat.rang }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+                        <!-- Fila con tabla y gráfico -->
+                        <div class="row">
+                            <div class="col-12 col-md-7">
+                                <!-- Título de la tabla -->
+                                <h3 class="fw-bold fs-4 my-3">Users</h3>
+                                <!-- Tabla con datos de los usuarios -->
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr class="highlight">
+                                            <th scope="col">#</th>
+                                            <th scope="col">First</th>
+                                            <th scope="col">Last</th>
+                                            <th scope="col">Handle</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>mdo</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                            <td>at</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td colspan="2">Larry the Bird</td>
+                                            <td>twitter</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Gráfico de informes -->
+                            <div class="col-12 col-md-5">
+                                <h3 class="fw-bold fs-4 my-3">
+                                    Reports Overview
+                                </h3>
+                                <!-- Gráfico de barras -->
+                                <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                      
+            </main>

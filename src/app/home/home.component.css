@@ -1,198 +1,312 @@
-/* Container principal */
-.home-container {
+/* Importa la fuente 'Outfit' desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+/* Elimina el subrayado de los enlaces */
+a {
+    text-decoration: none;
+}
+
+/* Elimina el estilo de lista de los elementos 'li' */
+li {
+    list-style: none;
+}
+
+/* Aplica la fuente 'Outfit' a todo el cuerpo del documento */
+body {
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Establece un diseño de tipo flexbox para el contenedor principal */
+.wrapper {
     display: flex;
-    height: 100vh;
-    font-family: Arial, sans-serif;
-    position: relative;
-  }
-  
-  /* Barre latérale */
-  .sidebar {
-    width: 220px;
-    background-color: #687576; /* gris clair */
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    box-shadow: 2px 0 5px rgba(225, 5, 100, 0.1);
-  }
-  /* Image */
-  .logout-section {
-    margin-bottom: 100px;
-    text-align: center;
-  }
-  .logout-img {
-    width: 100px;
-    height: 100px;
-    cursor: pointer;
-  }/* Liens de navigation */
-  .nav-links {
+}
+
+/* Define la estructura de la sección principal, de tipo flex con dirección de columna */
+.main {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-  }.nav-btn {
-    background-color: #043a2c; /* vert foncé */
-    color: white;
-    border: none;
-    padding: 10px;
-    text-align: left;
-    cursor: pointer;
-    border-radius: 6px;
-    font-size: 15px;
-  }.nav-btn:hover {
-    background-color: #5e706e;
-    
-  }/* Zone principale */
-  .main-content {
-    flex-grow: 1;
-    padding: 2rem;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    transition: all 0.25s ease-in-out;
+    background-color: #fff;
+}
+
+/* Estilo para el sidebar, con un ancho de 90px */
+#sidebar {
+    width: 90px;
+    min-width: 90px;
+    transition: all 0.25s ease-in-out;
+    background-color: #0b0f19; /* color de fondo del sidebar */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Expande el sidebar a 260px cuando tiene la clase 'expand' */
+#sidebar.expand {
+    width: 260px;
+    min-width: 260px;
+}
+
+/* Oculta los elementos dentro del sidebar si no está expandido */
+#sidebar:not(.expand) .sidebar-logo,
+#sidebar:not(.expand) a.sidebar-link span {
+    display: none;
+}
+
+/* Estilo para el botón de alternar el sidebar (toggle button) */
+.toggle-btn {
+    width: 30px;
+    height: 30px;
+    color: #fff;
+    border-radius: 0.425rem;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #323c55;
+}
+
+/* Estilo para el ícono dentro del botón de alternar */
+.toggle-btn i {
+    color: #fff;
+}
+
+/* Animación de fadeIn cuando el sidebar se expande */
+#sidebar.expand .sidebar-logo,
+#sidebar.expand a.sidebar-link span {
+    animation: fadeIn 0.25s ease;
+}
+
+/* Definición de la animación 'fadeIn' */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Estilo para el logo en el sidebar */
+.sidebar-logo a {
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+/* Estilo para la navegación del sidebar */
+.sidebar-nav {
+    padding: 0.7rem 0;
+    flex: 11 auto;
+    z-index: 10;
+}
+
+/* Estilo para los enlaces dentro del sidebar */
+a.sidebar-link {
+    padding: .625rem 1.625rem;
+    color: #fff;
+    display: block;
+    white-space: nowrap;
+    font-weight: 700;
+    border-left: 3px solid transparent;
+}
+
+/* Estilo para los íconos en los enlaces del sidebar */
+.sidebar-link i,
+.dropdown-item i {
+    font-size: 1.1rem;
+    margin-right: .75rem;
+}
+
+/* Estilo para el efecto hover en los enlaces del sidebar */
+a.sidebar-link:hover {
+    background-color: rgba(255, 255, 255, .075);
+    border-left: 3px solid #3b7ddd;
+}
+
+/* Estilo para los ítems dentro del sidebar */
+.sidebar-item {
     position: relative;
-  }
-  
-  /* Bouton Se connecter en haut à droite */
- .top-right {
+}
+
+/* Estilo para el dropdown cuando el sidebar no está expandido */
+#sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
     position: absolute;
-    top: 10px;
-    right: 20px;
-  }
-  .connect-btn {
-    background-color: #191a19;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  .connect-btn:hover {
-    background-color: #145a1b;
-  }
-  .dropdown-container {
-    position: relative;
-    width: 100%;
-  }
-  
-  .dropdown-toggle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .dropdown-menu {
-    background-color: #a3d944;
-    border-radius: 8px;
-    margin-top: 5px;
-    padding: 10px;
+    top: 0;
+    left: 90px;
+    background-color: #0e2238;
+    padding: 0;
+    min-width: 15rem;
     display: none;
-    flex-direction: column;
-  }
-  
-  .dropdown-container:hover .dropdown-menu {
-    display: flex;
-  }
-  
-  .dropdown-menu a {
-    color: #022c22;
-    padding: 5px 0;
-    text-decoration: none;
-    font-size: 14px;
-  }
-  
-  .dropdown-menu a:hover {
-    text-decoration: underline;
-  }
-  .nav-links {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 220px; /* ou selon ta mise en page */
-  }
-  
-  .nav-btn {
-    background-color: #0f5132;
-    color: white;
-    border: none;
-    padding: 10px;
+}
+
+/* Muestra el dropdown cuando se pasa el ratón sobre el ítem */
+#sidebar:not(.expand) .sidebar-item:hover .has-dropdown + .sidebar-dropdown {
+    display: block;
+    max-height: 15em;
+    width: 100%;
+    opacity: 1;
+}
+
+/* Ajuste para los submenus dentro del dropdown */
+#sidebar:not(.expand) .sidebar-item .sidebar-dropdown .sidebar-dropdown {
+    left: 130px;
+}
+
+/* Estilo para los íconos dentro del enlace de un dropdown */
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
+    border: solid;
+    border-width: 0 .075rem .075rem 0;
+    content: "";
+    display: inline-block;
+    padding: 2px;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.4rem;
+    transform: rotate(-135deg);
+    transition: all .2s ease-out;
+}
+
+/* Estilo para cambiar la dirección del ícono cuando el dropdown está colapsado */
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+    transform: rotate(45deg);
+    transition: all .2s ease-out;
+}
+
+/* Estilo para los enlaces dentro de los dropdowns */
+.sidebar-dropdown .sidebar-link {
+    position: relative;
+    padding-left: 3rem;
+    transition: all 0.5s;
+}
+
+/* Añade un ícono antes de los enlaces dentro de un dropdown */
+.sidebar-dropdown a.sidebar-link::before {
+    content: "";
+    height: 0.125rem;
+    width: 0.375rem;
+    background-color: #ffffff80;
+    position: absolute;
+    left: 1.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.5s;
+}
+
+/* Efecto hover para los enlaces en los dropdowns */
+.sidebar-dropdown a.sidebar-link:hover {
+    background: transparent;
+    border-left: 3px solid transparent;
+    padding-left: 3.8rem;
+    color: #7277f2;
+}
+
+/* Estilo para la barra de navegación */
+.navbar {
+    background-color: #fff;
+    box-shadow: 0 0 2rem 0 rgba(33, 37, 41, .1);
+}
+
+/* Estilo para los menús de navegación en dispositivos grandes */
+.navbar-expand .navbar-collapse {
+    min-width: 200px;
+}
+
+/* Estilo para los avatares (imagenes de perfil) */
+.avatar {
+    height: 40px;
+    width: 40px;
+}
+
+/* Estilo para las tarjetas (cards) */
+.card {
+    background-color: #fff;
+    transition: .4s;
+    cursor: pointer;
+    color: #000;
+    margin-bottom: 1rem;
+    border-color: rgba(231, 234, 243, 0.7);
+}
+
+/* Estilo para los títulos de las tarjetas */
+.card h6 {
+    text-transform: uppercase;
+    font-size: .7161rem;
+    margin-bottom: .25rem;
+}
+
+/* Efecto hover para las tarjetas */
+.card:hover {
+    background-color: #293b5f;
+    color: #fff;
+    transform: translateY(-10.5px);
+}
+
+/* Estilo para las cabeceras de la tabla */
+.table > thead tr {
+    color: #fff;
     text-align: left;
-    border-radius: 8px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    width: 100%;
-  }
-  
-  .dropdown-wrapper {
-    position: relative;
-    width: 100%;
-  }
-  
-  .dropdown-content {
-    background-color: #a3d944;
-    padding: 8px 12px;
-    border-radius: 8px;
-    display: none;
-    flex-direction: column;
-    margin-top: 5px;
-  }
-  
-  .dropdown-wrapper:hover .dropdown-content {
-    display: flex;
-  }
-  
-  .dropdown-content a {
-    color: #022c22;
-    font-size: 14px;
-    padding: 5px 0;
-    text-decoration: none;
-  }
-  
-  .dropdown-content a:hover {
-    text-decoration: underline;
-  }
-  .user-info {
-  cursor: pointer;
-  display: inline-block;
-  padding: 10px;
-  background: transparent;
 }
 
-.user-name {
-  color: #004d40; /* ou ta couleur */
+/* Estilo para resaltar las filas en la tabla */
+tr.highlight th {
+    background-color: #293b5f;
+    color: #fff;
 }
 
-.user-dropdown {
-  position: absolute;
-  top: 60px; /* ajuste selon ton header */
-  right: 20px;
-  background: white;
-  border: 1px solid #ccc;
-  padding: 10px;
+/* Estilo para el contenido principal */
+.content {
+    flex: 11 auto;
 }
 
-.user-dropdown button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #004d40;
+/* Estilo para el pie de página */
+footer {
+    background-color: #f5f5f5;
+    padding-inline: 1rem .875rem;
 }
-
-.top-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.profile-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.navbar {
+  min-height: 0.5px; /* ou même 40px si tu veux très mince */
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  height: 15px;
+  width: 15px;
 }
 
-.profile-select {
-  padding: 5px;
+
+/* Estilos específicos para pantallas grandes (mayores a 768px) */
+@media(min-width:768px) {
+
+    /* Estilo para el campo de búsqueda en el navbar */
+    .input-group-navbar .form-control:focus {
+        outline: none;
+        box-shadow: 0 0 0 0 rgba(255, 255, 255);
+        border: none;
+        background-color: #f5f5f5;
+    }
+
+    .input-group-navbar {
+        max-width: 320px;
+    }
+
+    /* Estilo para los botones dentro del campo de búsqueda */
+    .input-group-navbar .btn {
+        color: #000;
+        background-color: #f5f5f5;
+        cursor: pointer;
+        z-index: 1000;
+    }
+
+    .input-group-navbar .btn:active {
+        background-color: #f5f5f5;
+    }
+
+    /* Estilo para los menús desplegables del navbar */
+    .navbar-expand .navbar-nav .dropdown-menu {
+        box-shadow: 0 .1rem .2rem rgba(0,0,0,.05);
+    }
 }

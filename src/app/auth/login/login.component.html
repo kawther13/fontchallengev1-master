@@ -1,38 +1,71 @@
+<section class="vh-100 login-gradient">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card login-card text-dark">
+          <div class="card-body p-5 text-center">
 
-<div class="login-container">
-  <div class="left-panel">
-    <!-- Message de succès -->
-<p class="success-message" *ngIf="successMessage">{{ successMessage }}</p>
+            <!-- ✅ Messages de succès/erreur -->
+            <p class="success-message text-success" *ngIf="successMessage">{{ successMessage }}</p>
+            <p class="error-message text-danger" *ngIf="errorMessage">{{ errorMessage }}</p>
 
-<!-- Message d'erreur -->
-<p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+              <h2 class="fw-bold mb-4 text-uppercase">Login</h2>
 
-    <h2>LOGIN</h2>
-  
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <input formControlName="matricule" type="text" placeholder="Matricule" />
+              <!-- Champ matricule -->
+              <div class="form-outline mb-4 input-icon-container">
+                <i class="fas fa-user input-icon"></i>
+                <input
+                  type="text"
+                  class="form-control form-control-lg input-with-icon"
+                  placeholder="Type your username"
+                  formControlName="matricule"
+                />
+              </div>
 
-      <div class="password-field">
-        <input
-          [type]="showPassword ? 'text' : 'password'"
-          formControlName="password"
-          placeholder="PASSWORD"
-        />
-        <span (click)="togglePasswordVisibility()">
-          <i class="eye-icon">{{ showPassword ? '👁️' : '🙈' }}</i>
-        </span>
-      </div>
-
-      <a class="forgot-password" href="#">Forget Password?</a>
-
-      <button type="submit" [disabled]="loginForm.invalid">LOGIN</button>
-    </form>
-    <p class="terms">
-      By continuing, you are agreeing to our
-      <a href="#">terms & conditions</a> and our privacy policy.
-    </p>
-  </div>
-  <div class="right-panel">
-    <div class="star-shape"></div>
-  </div>
+              <!-- Champ mot de passe -->
+             <!-- Champ mot de passe avec icône + œil -->
+<div class="form-outline mb-4 input-icon-container">
+  <i class="fas fa-lock input-icon"></i>
+  <input
+    [type]="showPassword ? 'text' : 'password'"
+    class="form-control form-control-lg input-with-icon pe-5"
+    placeholder="Type your password"
+    formControlName="password"
+  />
+  <!-- 👁️ Icône œil à droite -->
+ 
 </div>
+ <div class="mb-4 text-end">
+ <span class="eye-toggle" (click)="togglePasswordVisibility()" title="Afficher/Masquer">
+    <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+  </span>
+ </div>
+              <!-- Lien mot de passe oublié -->
+              <div class="mb-4 text-end">
+                <a href="#" class="text-muted small">Forgot password?</a>
+              </div>
+
+              <!-- Bouton login -->
+              <button type="submit" class="btn login-btn w-100" [disabled]="loginForm.invalid">
+                LOGIN
+              </button>
+
+              <!-- Réseaux sociaux -->
+              <p class="mt-4 mb-2 text-muted">Or Sign Up Using</p>
+              <div class="d-flex justify-content-center gap-3">
+                <a href="#" class="social-circle facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-circle twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-circle google"><i class="fab fa-google"></i></a>
+              </div>
+
+              <!-- Lien inscription -->
+              <p class="mt-4 mb-0 text-muted">Or Sign Up Using <a href="#" class="fw-bold">SIGN UP</a></p>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

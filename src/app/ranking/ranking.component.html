@@ -1,5 +1,5 @@
 <div class="container">
-  <h2>Find Ranking</h2>
+ 
 
   <mat-form-field appearance="fill">
     <mat-label>Challenge Name</mat-label>
@@ -16,7 +16,7 @@
     </mat-select>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" (click)="onSearch()">See Ranking</button>
+  <button mat-raised-button color="primary" (click)="onSearch()">Afficher</button>
 
   <!-- ✅ Tableau pour Agent & Commercial -->
   <div *ngIf="(selectedType === 'agent' || selectedType === 'commercial') && dataSource.data.length">
@@ -125,7 +125,7 @@
 
       <ng-container matColumnDef="nomRegion">
         <th mat-header-cell *matHeaderCellDef> nomRegion (Agence) </th>
-        <td mat-cell *matCellDef="let e">{{ e.nomRegion }}</td>
+        <td mat-cell *matCellDef="let e">{{ e.nameAgence }}</td>
       </ng-container>
 
       <ng-container matColumnDef="typeAgence">

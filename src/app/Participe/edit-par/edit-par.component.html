@@ -1,0 +1,61 @@
+<div class="container">
+  <mat-card class="form-card">
+    <h2 class="text-xl font-bold mb-4">Modifier un Participant</h2>
+
+    <form [formGroup]="participantForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="w-full" appearance="fill">
+        <mat-label>Code Participant</mat-label>
+        <input matInput type="text" formControlName="codePar">
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="fill">
+        <mat-label>Rôle</mat-label>
+        <mat-select formControlName="role">
+          <mat-option value="AGENT">AGENT</mat-option>
+          <mat-option value="SALARIE">SALARIE</mat-option>
+          <mat-option value="CHEF_AGENCE">CHEF_AGENCE</mat-option>
+          <mat-option value="CHEF_REGION">CHEF_REGION</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="fill" *ngIf="participantForm.get('role')?.value !== 'AGENT'">
+        <mat-label>Matricule</mat-label>
+        <input matInput formControlName="matricule">
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="fill">
+        <mat-label>Nom</mat-label>
+        <input matInput formControlName="nom">
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email">
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="fill">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput type="text" formControlName="motDePasse">
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="fill">
+        <mat-label>Agence</mat-label>
+        <input matInput formControlName="agence">
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="fill">
+        <mat-label>Région</mat-label>
+        <mat-select formControlName="regionId">
+          <mat-option *ngFor="let reg of regions" [value]="reg.id">{{ reg.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="participantForm.invalid">
+        Enregistrer
+      </button>
+    </form>
+
+    <p class="mt-4 text-green-600">{{ message }}</p>
+  </mat-card>
+</div>
+

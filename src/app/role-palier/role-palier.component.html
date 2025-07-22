@@ -1,15 +1,15 @@
 <div class="max-w-4xl mx-auto mt-6 p-4 border rounded bg-white shadow">
-  <h3 class="text-lg font-bold text-green-800 mb-4">Définir un rôle et un type de gain</h3>
+  <h6 class="text-lg font-bold text-green-800 mb-4">Définir un rôle et un type de gain</h6>
 
   <!-- Formulaire Rôle + Type de Gain -->
   <div *ngIf="!rolePalierId" class="grid grid-cols-2 gap-4 mb-4">
     <mat-form-field appearance="fill" class="w-full">
       <mat-label>Rôle</mat-label>
       <mat-select [(ngModel)]="rolePalier.role">
-        <mat-option value="agent">Agent</mat-option>
-        <mat-option value="commercant">Commerçant</mat-option>
-        <mat-option value="chef_agence">Chef d'agence</mat-option>
-        <mat-option value="chef_region">Chef de région</mat-option>
+        <mat-option value="AGENT">Agent</mat-option>
+        <mat-option value="SALARIE">salarie</mat-option>
+        <mat-option value="CHEF_AGENCE">Chef d'agence</mat-option>
+        <mat-option value="CHEF_REGION">Chef de région</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -26,7 +26,7 @@
   <button *ngIf="!rolePalierId"
           mat-raised-button color="primary"
           (click)="saveRolePalier()">
-    Enregistrer le rôle
+    Enregistrer
   </button>
 
   <!-- Interface saisie dynamique -->
@@ -34,7 +34,7 @@
 
     <!-- Paliers Classement -->
     <div *ngIf="rolePalier.typeGain === 'classement'" class="mb-6">
-      <h4 class="font-semibold text-blue-700 mb-2">Paliers Classement</h4>
+      <h6 class="font-semibold text-blue-700 mb-2">Paliers Classement</h6>
       <div *ngFor="let c of rolePalier.palierClassements; let i = index" class="grid grid-cols-3 gap-3 mb-2 items-center">
         <mat-form-field appearance="fill" class="w-full">
           <mat-label>Nombre de gagnants</mat-label>
@@ -49,8 +49,9 @@
         <button mat-icon-button color="warn" (click)="removeClassement(i)">
           <mat-icon>delete</mat-icon>
         </button>
+        
       </div>
-      <button mat-raised-button color="accent" (click)="addClassement()">+ Ajouter un palier classement</button>
+      <button mat-raised-button color="primary" (click)="addClassement()">+ Ajouter </button>
     </div>
 
     <!-- Paliers Intervalle -->
@@ -112,7 +113,7 @@
 
   <!-- Liste des rôles existants -->
   <div *ngIf="rolePaliersList.length > 0" class="mt-6">
-    <h3 class="text-lg font-bold text-green-700 mb-4">Rôles enregistrés</h3>
+    <h6 class="text-lg font-bold text-black-700 mb-4">Rôles enregistrés</h6>
 
     <table mat-table [dataSource]="rolePaliersList" class="mat-elevation-z8 w-full">
       <ng-container matColumnDef="role">

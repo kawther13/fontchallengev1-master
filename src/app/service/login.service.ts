@@ -17,7 +17,7 @@ login(data: any) {
           localStorage.setItem('token', response.token);
           localStorage.setItem('role', response.user.role);
           localStorage.setItem('username', response.user.username);
-          //localStorage.setItem('userId', response.user.id.toString());
+          localStorage.setItem('userId', response.user.id.toString());
         }
       })
     );

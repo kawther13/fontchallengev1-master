@@ -1,42 +1,209 @@
-<div class="home-container">
-    <!-- Barre latérale -->
-    <aside class="sidebar">
-      <div class="logout-section">
-        <!-- Image cliquable pour déconnexion -->
-        <img src="../../assets/image.png"  class="logout-img"  />
-      </div>
-  
-      <nav class="nav-links">
-        <button class="nav-btn" routerLink="/register">Dashboard</button>
-         <!--<button class="nav-btn" routerLink="/home/ajouterpar" >Particiant</button>-->
-       <button class="nav-btn" routerLink="/home/list" >Les Challenges</button>
-        <button class="nav-btn" routerLink="/home/agence">Agence  </button>
-        <button class="nav-btn" routerLink="/home/region">Region   </button>
-        <button class="nav-btn" routerLink="/home/listP">Produit  </button>
-        <div class="dropdown-container">
-          <button class="nav-btn dropdown-toggle">
-            <i class="fa fa-user"></i> Users <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="dropdown-menu">
-            <a routerLink="/home/userlist" routerLinkActive="active">Users List</a>
-            <a routerLink="/home/userajou" routerLinkActive="active">Add User</a>
-          </div>
+ <!-- Contenedor principal que agrupa todos los elementos de la página -->
+    <div class="wrapper">
+        
+        <!-- Barra lateral (sidebar) con elementos de navegación -->
+        <aside id="sidebar">
+            <!-- Contenedor de la parte superior del sidebar, con logo y botón para alternar el tamaño del menú -->
+            <div class="d-flex justify-content-between p-4">
+                <div>
+                    <!-- Logo o nombre de la aplicación, enlace que no redirige a ninguna parte -->
+                    <img src="../../assets/star.png" alt="dashboard" width="50" class="rounded-circle me-2" />
+                </div>
+                <!-- Botón para alternar el menú lateral -->
+                <button class="toggle-btn border-0" type="button">
+                    <i id="icon" class='bx bxs-chevrons-right'></i>
+                </button>
+            </div>
+
+            <!-- Lista de navegación del sidebar -->
+            <ul class="sidebar-nav">
+                <!-- Enlace para la opción "Profile" -->
+                  <li class="sidebar-item" *ngIf="role !== 'AGENT' && role !== 'SALARIE'">
+                    <a routerLink="/home/dahporadmin" class="sidebar-link">
+                        <i class='bx bxs-layer'></i>
+                        <span>Dashboard</span>
+                    </a>
+              <li class="sidebar-item" *ngIf="role === 'AGENT' || role === 'SALARIE'">
+
+
+                            <a routerLink="/home/dahpoPar" class="sidebar-link">
+                                <i class='bx bxs-layer'></i>
+                                <span>DashboardP</span>
+                            </a>
+                </li>
+
+                 
+                <li class="sidebar-item">
+                    <a routerLink="/home/list" class="sidebar-link">
+                        <i class='bx bxs-layer'></i>
+                        <span>Challenges</span>
+                    </a>
+                </li>
+                
+                <!-- Enlace para la opción "Task" -->
+                <li class="sidebar-item">
+                    <a routerLink="/home/gain" class="sidebar-link">
+                        <i class='bx bxs-layer'></i>
+                        <span>Gain</span>
+                    </a>
+                </li>
+                 <li class="sidebar-item">
+                    <a routerLink="/home/produit" class="sidebar-link">
+                        <i class='bx bxs-layer'></i>
+                        <span>Produit</span>
+                    </a>
+                </li>
+                  <li class="sidebar-item">
+                    <a routerLink="/home/ListPar" class="sidebar-link">
+                        <i class='bx bxs-layer'></i>
+                        <span>Participant</span>
+                    </a>
+                </li>
+                
+
+                <!-- Menú desplegable "Auth" -->
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                        <i class='bx bxs-bug-alt'></i>
+                        <span>Auth</span>
+                    </a>
+                    <!-- Submenú de "Auth" con las opciones "Login" y "Register" -->
+                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                Login
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                Register
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Menú desplegable "Multi Level" -->
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
+                        <i class='bx bxs-bar-chart-alt-2'></i>
+                        <span>Multi Level</span>
+                    </a>
+                    <!-- Submenú de "Multi Level" -->
+                    <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                                data-bs-target="#multi-two" aria-expanded="false" aria-controls="multi-two">
+                                Two Links
+                            </a>
+                            <!-- Submenú de "Two Links" -->
+                            <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Link 1</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="#" class="sidebar-link">Link 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Enlace para la opción "Notification" -->
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <i class='bx bxs-bell-ring'></i>
+                        <span>Notification</span>
+                    </a>
+                </li>
+
+                <!-- Enlace para la opción "Setting" -->
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <i class='bx bxs-cog'></i>
+                        <span>Setting</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Pie del sidebar con enlace de "Logout" -->
+            <div class="sidebar-footer">
+                <a (click)="logout()"  class="sidebar-link">
+                    <i class='bx bx-log-out'></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Contenedor principal que contiene el contenido y barra de navegación superior -->
+        <div class="main">
+           
+            <!-- Barra de navegación (navbar) con un campo de búsqueda -->
+            <!-- ✅ Navbar CORRECTE et FONCTIONNELLE -->
+<nav class="navbar navbar-expand px-3 py-1">
+
+
+  <!-- ✅ Menu utilisateur à droite -->
+  <div class="ms-auto">
+  <ul class="navbar-nav">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+         data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://i.pravatar.cc/40" class="avatar img-fluid rounded-circle" alt="User">
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end border-0 shadow" aria-labelledby="userDropdown">
+        <li>
+          <a class="dropdown-item" href="#"><i class='bx bx-data'></i> Analytics</a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="#"><i class='bx bx-cog'></i> Settings</a>
+        </li>
+        <li><hr class="dropdown-divider"></li>
+        <li>
+           
+                <a (click)="logout()"  class="dropdown-item">
+                    <i class='bx bx-log-out'></i>
+                    <span>Logout</span>
+                </a>
+            
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+</nav>
+
+
+      <router-outlet></router-outlet>     
+
+            <!-- Pie de página con enlaces de contacto y términos 
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-body-secondary">
+                        <div class="col-6 text-start">
+                            <a href="#" class="text-body-secondary">
+                                <strong>CodzSword</strong>
+                            </a>
+                        </div>
+                        <div class="col-6 text-end text-body-secondary d-none d-md-block">
+                            <ul class="list-inline mb-0">
+                                <li class="list-inline-item">
+                                    <a href="#" class="text-body-secondary">Contact</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#" class="text-body-secondary">About</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#" class="text-body-secondary">Terms & Conditions</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>-->
         </div>
-      </nav>
-      
-    </aside>
   
-    <!-- Contenu principal -->
-    <main class="main-content">
-      <!-- Bouton Se connecter en haut à droite -->
-      <div class="top-right">
-        <button class="connect-btn"  (click)="logout()">déconnecter</button>
-      </div>
-  
-      
-      <!-- Contenu ici -->
-       <router-outlet></router-outlet>
-    </main>
-   
-  </div>
-  
+    </div>
+    

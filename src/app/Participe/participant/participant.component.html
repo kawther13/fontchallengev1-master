@@ -1,0 +1,74 @@
+<div >
+  <div class="card shadow-sm p-4">
+    <h2 class="mb-4 fw-bold">Ajouter un Participant</h2>
+
+    <form [formGroup]="participantForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Code Participant -->
+      <div class="mb-3">
+        <label class="form-label">Code Participant</label>
+        <input type="text" class="form-control" formControlName="codePar">
+      </div>
+
+      <!-- Rôle -->
+      <div class="mb-3">
+        <label class="form-label">Rôle</label>
+        <select class="form-select" formControlName="role">
+          <option value="AGENT">AGENT</option>
+          <option value="SALARIE">SALARIE</option>
+          <option value="CHEF_AGENCE">CHEF_AGENCE</option>
+          <option value="CHEF_REGION">CHEF_REGION</option>
+        </select>
+      </div>
+
+      <!-- Matricule (affiché si rôle ≠ AGENT) -->
+      <div class="mb-3" *ngIf="participantForm.get('role')?.value !== 'AGENT'">
+        <label class="form-label">Matricule</label>
+        <input type="text" class="form-control" formControlName="matricule">
+      </div>
+
+      <!-- Nom -->
+      <div class="mb-3">
+        <label class="form-label">Nom</label>
+        <input type="text" class="form-control" formControlName="nom">
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" formControlName="email">
+      </div>
+
+      <!-- Mot de passe -->
+      <div class="mb-3">
+        <label class="form-label">Mot de passe</label>
+        <input type="text" class="form-control" formControlName="motDePasse">
+      </div>
+
+      <!-- Agence -->
+      <div class="mb-3">
+        <label class="form-label">Agence</label>
+        <input type="text" class="form-control" formControlName="agence">
+      </div>
+
+      <!-- Région -->
+      <div class="mb-3">
+        <label class="form-label">Région</label>
+        <select class="form-select" formControlName="regionId">
+          <option *ngFor="let reg of regions" [value]="reg.id">{{ reg.name }}</option>
+        </select>
+      </div>
+
+      <!-- Boutons -->
+      <div class="d-flex gap-2 mt-3">
+        <button type="submit" class="btn btn-primary" [disabled]="participantForm.invalid">
+          ✅ Ajouter
+        </button>
+        <button type="button" class="btn btn-outline-danger" (click)="annuler()">❌ Annuler</button>
+      </div>
+
+      <!-- Message -->
+      <p class="mt-4 text-success fw-bold" *ngIf="message">{{ message }}</p>
+    </form>
+  </div>
+</div>

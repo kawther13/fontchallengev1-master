@@ -1,0 +1,62 @@
+<!-- STEP BY STEP CHALLENGE CREATION -->
+<div *ngIf="stepperVisible">
+  <mat-horizontal-stepper [linear]="isLinear" #stepper>
+
+    <!-- Étape 1 : Créer le challenge -->
+    <mat-step>
+      <ng-template matStepLabel>Créer Challenge</ng-template>
+      <app-add-challengee (challengeCreated)="setChallengeId($event); stepper.next()"></app-add-challengee>
+    </mat-step>
+
+    <!-- Étape 2 : Ajouter Conditions -->
+    <mat-step>
+      <ng-template matStepLabel>Conditions</ng-template>
+      <app-condition *ngIf="challengeId" [challengeId]="challengeId"></app-condition>
+      <div class="mt-3">
+        <button mat-button matStepperPrevious>Retour</button>
+        <button mat-button matStepperNext>Suivant</button>
+      </div>
+    </mat-step>
+
+    <!-- Étape 3 : Conditions de Gain -->
+    <mat-step>
+      <ng-template matStepLabel>Condition de Gain</ng-template>
+      <app-condition-gain *ngIf="challengeId" [challengeId]="challengeId"></app-condition-gain>
+      <div class="mt-3">
+        <button mat-button matStepperPrevious>Retour</button>
+        <button mat-button matStepperNext>Suivant</button>
+      </div>
+    </mat-step>
+
+    <!-- Étape 4 : Règles de Score -->
+    <mat-step>
+      <ng-template matStepLabel>Règles de Score</ng-template>
+      <app-score-rule *ngIf="challengeId" [challengeId]="challengeId"></app-score-rule>
+      <div class="mt-3">
+        <button mat-button matStepperPrevious>Retour</button>
+        <button mat-button matStepperNext>Suivant</button>
+      </div>
+    </mat-step>
+
+    <!-- Étape 5 : Rôle et Paliers -->
+    <mat-step>
+      <ng-template matStepLabel>Gains par Rôle</ng-template>
+      <app-role-palier *ngIf="challengeId" [challengeId]="challengeId"></app-role-palier>
+      <div class="mt-3">
+        <button mat-button matStepperPrevious>Retour</button>
+        <button mat-button (click)="finishStepper()">Terminer</button>
+      </div>
+    </mat-step>
+
+  </mat-horizontal-stepper>
+</div>
+
+<!-- ✅ Message final -->
+<div *ngIf="!stepperVisible" class="text-center mt-4">
+  <h3 class="text-success">🎉 Challenge créé avec succès !</h3>
+  
+  <div class="mt-3 d-flex justify-content-center gap-3">
+    <button mat-stroked-button color="primary" (click)="restart()">➕ Créer un autre challenge</button>
+    <button mat-stroked-button color="warn" (click)="annuler()">❌ Annuler</button>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { ConditionGainService } from '../service/condition-gain.service';
 import { ChallengeService } from '../service/challenge.service';
@@ -32,12 +32,12 @@ export class ConditionGainComponent {
  conditionGainForm!: FormGroup;
   conditionGains: ConditionGain[] = [];
   editingId: number | null = null;
-  challengeId: number | null = null;
+ // challengeId: number | null = null;
 
-  roles = ['agent', 'commercant', 'chef_agence', 'chef_region'];
-  contratTypes = ['FORFAITAIRE', 'RENOUVELABLE'];
+  roles = ['AGENT', 'SALARIE', 'CHEF_AGENCE', 'CHEF_REGION'];
+  contratTypes = ['FORFAITAIRE', 'RENOUVELABLE','annuel'];
   displayedColumns: string[] = ['role', 'typeContrat', 'nbrContrat', 'prime', 'actions'];
-
+@Input() challengeId!: number;
   constructor(
     private fb: FormBuilder,
     private conditionGainService: ConditionGainService,
@@ -45,7 +45,7 @@ export class ConditionGainComponent {
   ) {}
 
   ngOnInit(): void {
-    this.challengeId = this.challengeService.getChallengeId();
+   // this.challengeId = this.challengeService.getChallengeId();
 
     // ✅ Initialiser le formulaire réactif
     this.conditionGainForm = this.fb.group({

@@ -2,18 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ChallengeDetail } from '../models/challenge-detail';
+import { Challenge } from '../models/challenge';
 
 
 
-export interface Challenge {
-  rules: any;
-  id?: number;
-  nom: string;
-  description: string;
-  dateDebut: string;
-  dateFin: string;
-  concerner: string[];
-}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -68,8 +61,8 @@ private Url = 'http://localhost:8088/rules';
   save(challenge: any) {
     return this.http.post(`${this.baseUrl}`, challenge);
   }
- getAll(): Observable<Challenge[]> {
-  return this.http.get<Challenge[]>(this.baseUrl);
+ getChallenges(page: number, size: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}?page=${page}&size=${size}`);
   }
 
 
@@ -80,4 +73,14 @@ private Url = 'http://localhost:8088/rules';
   return this.http.get<ChallengeDetail>(`http://localhost:8088/challenges/${id}`);
 }
 
+
+
+update(id: number, challenge: Challenge) {
+  return this.http.put(`http://localhost:8088/challenges/${id}`, challenge);
+}
+
+
+getAllConcerners(id: number) {
+  return this.http.get<any[]>(`http://localhost:8088/challenges/by-challenge/${id}`);
+}
 }

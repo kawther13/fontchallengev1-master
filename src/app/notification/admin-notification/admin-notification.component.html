@@ -1,0 +1,11 @@
+<div class="container">
+  <h2>📢 Interface Admin - Envoyer une Notification</h2>
+  <div class="form-group">
+    <input [(ngModel)]="challengeId" type="number" placeholder="ID du challenge" class="form-control mb-2">
+    <input [(ngModel)]="titre" placeholder="Titre de la notification" class="form-control mb-2">
+    <textarea [(ngModel)]="message" placeholder="Message..." class="form-control mb-2"></textarea>
+    <button (click)="sendNotification()" class="btn btn-primary"
+            [disabled]="!challengeId || !titre || !message">Envoyer</button>
+  </div>
+</div>
+

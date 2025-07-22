@@ -1,0 +1,9 @@
+.card-hover {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.card-hover:hover {
+  background-color: #5385b3; /* bleu clair */
+  box-shadow: 0 0 10px rgba(133, 50, 6, 0.5); /* ombre bleutée */
+}

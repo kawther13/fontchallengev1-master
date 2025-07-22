@@ -1,0 +1,30 @@
+.create-challenge-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.challenge-card {
+  padding: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.half-width {
+  width: 48%;
+  margin-right: 4%;
+}
+
+.date-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.button-row {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
