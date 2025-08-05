@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Produit } from '../models/produit';
 import { Pack } from '../models/pack';
 import { ConditionProduitPack } from '../models/condition-produit-pack';
@@ -16,6 +16,9 @@ import { ActivatedRoute } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { TypeContrat } from '../models/TypeContrat';
+import { TypeContratService } from '../service/type-contrat.service';
+import { MatOptionModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-condition',
@@ -28,14 +31,15 @@ import { MatCardModule } from '@angular/material/card';
         MatButtonModule,
         MatListModule,
         MatListModule,
-         MatTableModule, MatIconModule,MatCardModule
+         MatTableModule, MatIconModule,MatCardModule,MatOptionModule
   ],
   templateUrl: './condition.component.html',
   styleUrl: './condition.component.css'
 })
 export class ConditionComponent {
 displayedColumns: string[] = ['typeContrat', 'prime', 'packs', 'actions'];
-contratTypes = ['FORFAITAIRE', 'RENOUVELABLE','annuel'];
+//contratTypes = ['FORFAITAIRE', 'RENOUVELABLE','annuel'];
+availableTypeContrats: TypeContrat[] = [];
  conditionForm: FormGroup;
   produits: any[] = [];
 
@@ -56,10 +60,12 @@ contratTypes = ['FORFAITAIRE', 'RENOUVELABLE','annuel'];
     private fb: FormBuilder,
     private conditionService: ConditionService,
     private produitService: ProduitService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private typeContratService: TypeContratService
   ) {
     this.conditionForm = this.fb.group({
-      typeContrat: [''],
+     typeContrat: [null, Validators.required],
+
       prime: [0],
       produit: [null],
       packs: [[]]
@@ -68,12 +74,19 @@ contratTypes = ['FORFAITAIRE', 'RENOUVELABLE','annuel'];
 
   ngOnInit(): void {
     this.loadProduits();
+    this.loadTypeContrats();
    // this.challengeId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadConditions();
     if (!this.challengeId) {
     console.warn("challengeId non reçu depuis le parent !");
     return;
   }
+  }
+
+  loadTypeContrats() {
+    this.typeContratService.getAll().subscribe(data => {
+      this.availableTypeContrats = data;
+    });
   }
 
   loadProduits() {

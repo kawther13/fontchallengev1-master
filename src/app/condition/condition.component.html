@@ -7,7 +7,8 @@
       <mat-form-field appearance="fill">
         <mat-label>Type de Contrat</mat-label>
         <mat-select formControlName="typeContrat">
-          <mat-option *ngFor="let t of contratTypes" [value]="t">{{ t }}</mat-option>
+         <mat-option *ngFor="let t of availableTypeContrats" [value]="t">{{ t.libelle }}</mat-option>
+
         </mat-select>
       </mat-form-field>
 
@@ -73,7 +74,8 @@
     <!-- Type Contrat Column -->
     <ng-container matColumnDef="typeContrat">
       <th mat-header-cell *matHeaderCellDef>Type Contrat</th>
-      <td mat-cell *matCellDef="let condition">{{ condition.typeContrat }}</td>
+      <td mat-cell *matCellDef="let condition">{{ condition.typeContrat?.libelle }}</td>
+
     </ng-container>
 <ng-container matColumnDef="produit">
     <th mat-header-cell *matHeaderCellDef>Produit</th>

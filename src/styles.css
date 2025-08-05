@@ -18,3 +18,8 @@ body {
   max-width: 1000px; /* ou '90vw' pour responsive */
 }
 
+.error{
+    border:2px solid rgb(255,21,21);}
+
+.valid{
+        border:4px solid rgba(134, 255, 21, 0.648);}

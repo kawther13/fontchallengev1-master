@@ -6,8 +6,7 @@ import { inject } from '@angular/core';
 export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
-  const token = localStorage.getItem('token');
-
+  const token = localStorage.getItem('jwt');
   if (token) {
     // ✅ Autorisé : le token existe
     return true;

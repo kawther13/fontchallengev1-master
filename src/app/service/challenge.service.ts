@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ChallengeDetail } from '../models/challenge-detail';
@@ -57,30 +57,46 @@ private Url = 'http://localhost:8088/rules';
 
 
 /*********************** */
+  private get headers() {
+    const token = localStorage.getItem('jwt');
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  }
 
   save(challenge: any) {
-    return this.http.post(`${this.baseUrl}`, challenge);
-  }
+  const token = localStorage.getItem('jwt');
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`
+  });
+
+  return this.http.post(`${this.baseUrl}`, challenge, { headers });
+}
+
  getChallenges(page: number, size: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}?page=${page}&size=${size}`);
-  }
+  const token = localStorage.getItem('jwt');
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`
+  });
+
+  return this.http.get<any>(`${this.baseUrl}?page=${page}&size=${size}`, { headers });
+}
 
 
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+ delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`, { headers: this.headers });
   }
   getById(id: number) {
-  return this.http.get<ChallengeDetail>(`http://localhost:8088/challenges/${id}`);
-}
+    return this.http.get<ChallengeDetail>(`${this.baseUrl}/${id}`, { headers: this.headers });
+  }
 
 
+  update(id: number, challenge: Challenge) {
+    return this.http.put(`${this.baseUrl}/${id}`, challenge, { headers: this.headers });
+  }
 
-update(id: number, challenge: Challenge) {
-  return this.http.put(`http://localhost:8088/challenges/${id}`, challenge);
-}
 
-
-getAllConcerners(id: number) {
-  return this.http.get<any[]>(`http://localhost:8088/challenges/by-challenge/${id}`);
-}
+  getAllConcerners(id: number) {
+    return this.http.get<any[]>(`${this.baseUrl}/by-challenge/${id}`, { headers: this.headers });
+  }
 }

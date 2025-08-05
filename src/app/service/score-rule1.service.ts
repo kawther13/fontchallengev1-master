@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
@@ -8,48 +8,57 @@ import { ScoreRule } from '../models/score-rule';
   providedIn: 'root'
 })
 export class ScoreRule1Service {
-
-   private baseUrl = 'http://localhost:8088/scoreRules';
+ private baseUrl = 'http://localhost:8088/scoreRules';
 
   constructor(private http: HttpClient) {}
+
+  // 🔐 Header avec token JWT
+  private get headers() {
+    const token = localStorage.getItem('jwt');
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  }
 
   /**
    * Créer une nouvelle ScoreRule
    */
- create(scoreRule: any, challengeId: number) {
-  return this.http.post(`http://localhost:8088/scoreRules/${challengeId}`, scoreRule);
-}
-
+  create(scoreRule: any, challengeId: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${challengeId}`, scoreRule, { headers: this.headers });
+  }
 
   /**
    * Mettre à jour une ScoreRule existante
    */
-  update(id: any , data: ScoreRule): Observable<ScoreRule> {
-    return this.http.put<ScoreRule>(`${this.baseUrl}/${id}`, data);
+  update(id: any, data: any): Observable<ScoreRule> {
+    return this.http.put<ScoreRule>(`${this.baseUrl}/${id}`, data, { headers: this.headers });
   }
 
   /**
    * Récupérer une ScoreRule par son ID
    */
   getById(id: number): Observable<ScoreRule> {
-    return this.http.get<ScoreRule>(`${this.baseUrl}/${id}`);
+    return this.http.get<ScoreRule>(`${this.baseUrl}/${id}`, { headers: this.headers });
   }
 
   /**
    * Lister toutes les ScoreRules
    */
   getAll(): Observable<ScoreRule[]> {
-    return this.http.get<ScoreRule[]>(this.baseUrl);
+    return this.http.get<ScoreRule[]>(this.baseUrl, { headers: this.headers });
   }
 
   /**
    * Supprimer une ScoreRule par son ID
    */
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/${id}`, { headers: this.headers });
   }
 
-getAllByChallenge(challengeId: number) {
-  return this.http.get<any[]>(`http://localhost:8088/scoreRules/byChallenge/${challengeId}`);
-}
+  /**
+   * Lister les ScoreRules par challenge
+   */
+  getAllByChallenge(challengeId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/byChallenge/${challengeId}`, { headers: this.headers });
+  }
 }

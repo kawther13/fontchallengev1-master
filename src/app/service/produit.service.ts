@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Produit } from '../models/produit';
 import { Observable } from 'rxjs';
@@ -8,38 +8,49 @@ import { Observable } from 'rxjs';
 })
 export class ProduitService {
 
-  private baseUrl = 'http://localhost:8088/produits';
+ private baseUrl = 'http://localhost:8088/produits';
 
   constructor(private http: HttpClient) {}
 
-  createProduit(produit: Produit): Observable<any> {
-    return this.http.post(`${this.baseUrl}/save`, produit);
+  // 🔐 Getter pour ajouter le token JWT dans les headers
+  private get headers() {
+    const token = localStorage.getItem('jwt');
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
   }
 
-   getProduits(): Observable<Produit[]> {
-    return this.http.get<Produit[]>(this.baseUrl);
+  // ✅ Créer un produit
+  createProduit(produit: Produit): Observable<any> {
+    return this.http.post(`${this.baseUrl}/save`, produit, { headers: this.headers });
+  }
+
+  // ✅ Récupérer tous les produits
+  getProduits(): Observable<Produit[]> {
+    return this.http.get<Produit[]>(this.baseUrl, { headers: this.headers });
   }
 
   getAllProduits(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}`);
+    return this.http.get<any[]>(`${this.baseUrl}`, { headers: this.headers });
   }
 
+  // ✅ Supprimer un produit
   deleteProduit(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/delete/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/delete/${id}`, { headers: this.headers });
   }
 
+  // ✅ Récupérer tous les packs
+  getAllPacks(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:8088/packs/all', { headers: this.headers });
+  }
 
-  getAllPacks() {
-  return this.http.get<any[]>('http://localhost:8088/packs/all');
-}
+  // ✅ Récupérer un produit par ID
+  getProduitById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${id}`, { headers: this.headers });
+  }
 
-getProduitById(id: number) {
-  return this.http.get<any>(`http://localhost:8088/produits/${id}`);
-}
-
-updateProduit(id: number, data: any) {
-  return this.http.put(`http://localhost:8088/produits/update/${id}`, data);
-}
-
-
+  // ✅ Mettre à jour un produit
+  updateProduit(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/update/${id}`, data, { headers: this.headers });
+  }
 }

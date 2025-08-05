@@ -25,14 +25,14 @@ SocketClient: any =null;
   }
 
   ngOnInit():void{
- const token = localStorage.getItem('token'); // récupère le token directement depuis le localStorage
+ /*const token = localStorage.getItem('token'); // récupère le token directement depuis le localStorage
   if (token) {
     let ws = new SockJS('http://localhost:8088/api/v1/ws');
     this.SocketClient=Stomp.over(ws);
     this.SocketClient.connect({'Authorization:':'Bearer'+token},()=>{
       console.log('connect to ws ')
     });
-  }
+  }*/
     
   }
 }

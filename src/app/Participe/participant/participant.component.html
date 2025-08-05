@@ -7,56 +7,79 @@
       <!-- Code Participant -->
       <div class="mb-3">
         <label class="form-label">Code Participant</label>
-        <input type="text" class="form-control" formControlName="codePar">
+        <input type="text" class="form-control" formControlName="codePar" [ngClass]="{'from-form-control mt-2':true,'error':participantForm.controls['codePar'].invalid && participantForm.controls['codePar'].touched,'valid':participantForm.controls['codePar'].valid && participantForm.controls['codePar'].touched}">
+        @if(participantForm.controls['codePar'].invalid && participantForm.controls['codePar'].touched){
+    <p class="text-danger">Code invalid</p>
+  }
       </div>
 
       <!-- Rôle -->
       <div class="mb-3">
         <label class="form-label">Rôle</label>
-        <select class="form-select" formControlName="role">
+        <select class="form-select" formControlName="role"[ngClass]="{'from-form-control mt-2':true,'error':participantForm.controls['role'].invalid && participantForm.controls['role'].touched,'valid':participantForm.controls['role'].valid && participantForm.controls['role'].touched}">
           <option value="AGENT">AGENT</option>
           <option value="SALARIE">SALARIE</option>
           <option value="CHEF_AGENCE">CHEF_AGENCE</option>
           <option value="CHEF_REGION">CHEF_REGION</option>
         </select>
+         @if(participantForm.controls['role'].invalid && participantForm.controls['role'].touched){
+    <p class="text-danger">Select role</p>
+  }
       </div>
 
       <!-- Matricule (affiché si rôle ≠ AGENT) -->
       <div class="mb-3" *ngIf="participantForm.get('role')?.value !== 'AGENT'">
         <label class="form-label">Matricule</label>
-        <input type="text" class="form-control" formControlName="matricule">
+        <input type="text" class="form-control" formControlName="matricule" [ngClass]="{'from-form-control mt-2':true,'error':participantForm.controls['matricule'].invalid && participantForm.controls['matricule'].touched,'valid':participantForm.controls['matricule'].valid && participantForm.controls['matricule'].touched}">
+          @if(participantForm.controls['matricule'].invalid && participantForm.controls['matricule'].touched){
+    <p class="text-danger">Matricule invalid</p>
+  }
       </div>
 
       <!-- Nom -->
       <div class="mb-3">
         <label class="form-label">Nom</label>
-        <input type="text" class="form-control" formControlName="nom">
+         <input type="text" class="form-control" formControlName="nom" [ngClass]="{'from-form-control mt-2':true,'error':participantForm.controls['nom'].invalid && participantForm.controls['nom'].touched,'valid':participantForm.controls['nom'].valid && participantForm.controls['nom'].touched}">
+          @if(participantForm.controls['nom'].invalid && participantForm.controls['nom'].touched){
+    <p class="text-danger">nom invalid</p>
+  }
       </div>
 
       <!-- Email -->
       <div class="mb-3">
         <label class="form-label">Email</label>
-        <input type="email" class="form-control" formControlName="email">
+        <input type="email" class="form-control" formControlName="email" [ngClass]="{'from-form-control mt-2':true,'error':participantForm.controls['email'].invalid && participantForm.controls['email'].touched,'valid':participantForm.controls['email'].valid && participantForm.controls['email'].touched}">
+          @if(participantForm.controls['email'].invalid && participantForm.controls['email'].touched){
+    <p class="text-danger">email invalid</p>
+  }
       </div>
 
       <!-- Mot de passe -->
       <div class="mb-3">
         <label class="form-label">Mot de passe</label>
-        <input type="text" class="form-control" formControlName="motDePasse">
+        <input type="text" class="form-control" formControlName="motDePasse" [ngClass]="{'from-form-control mt-2':true,'error':participantForm.controls['motDePasse'].invalid && participantForm.controls['motDePasse'].touched,'valid':participantForm.controls['motDePasse'].valid && participantForm.controls['motDePasse'].touched}">
+          @if(participantForm.controls['motDePasse'].invalid && participantForm.controls['motDePasse'].touched){
+    <p class="text-danger">mot de passe  invalid</p>
+  }
       </div>
 
       <!-- Agence -->
       <div class="mb-3">
         <label class="form-label">Agence</label>
-        <input type="text" class="form-control" formControlName="agence">
+        <input type="text" class="form-control" formControlName="agence"  [ngClass]="{'from-form-control mt-2':true,'error':participantForm.controls['agence'].invalid && participantForm.controls['agence'].touched,'valid':participantForm.controls['agence'].valid && participantForm.controls['agence'].touched}">
+          @if(participantForm.controls['agence'].invalid && participantForm.controls['agence'].touched){
+    <p class="text-danger">agence  invalid</p>}
+  
       </div>
 
       <!-- Région -->
       <div class="mb-3">
         <label class="form-label">Région</label>
-        <select class="form-select" formControlName="regionId">
+        <select class="form-select" formControlName="regionId" [ngClass]="{'from-form-control mt-2':true,'error':participantForm.controls['regionId'].invalid && participantForm.controls['regionId'].touched,'valid':participantForm.controls['regionId'].valid && participantForm.controls['regionId'].touched}">
           <option *ngFor="let reg of regions" [value]="reg.id">{{ reg.name }}</option>
         </select>
+           @if(participantForm.controls['regionId'].invalid && participantForm.controls['regionId'].touched){
+    <p class="text-danger">region  invalid</p>}
       </div>
 
       <!-- Boutons -->

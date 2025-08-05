@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators,FormControl } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -32,16 +32,45 @@ participantForm: FormGroup;
   regions: any[] = [];
 
   constructor(private fb: FormBuilder, private participantService: ParticipantService, private regionService :RegionService,private dialogRef: MatDialogRef<ParticipantComponent>) {
-    this.participantForm = this.fb.group({
-      codePar: ['', Validators.required],
-      matricule: ['', Validators.required],
-      role: ['', Validators.required],
-      nom: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      motDePasse: ['', Validators.required],
-      agence: ['', Validators.required],
-      regionId: ['', Validators.required]
-    });
+   let controls= {
+    codePar: new FormControl('',[
+Validators.required,
+Validators.minLength(3),
+Validators.maxLength(10), ] ),
+matricule:new FormControl('',[
+Validators.required,
+Validators.minLength(3),
+Validators.maxLength(10),
+  ] ),
+ 
+nom:new FormControl('',[
+Validators.required,
+Validators.minLength(3),
+Validators.maxLength(10),
+Validators.pattern('^[A-Z][a-z]*$')
+] ),
+ email:new FormControl('',[
+    Validators.required,
+    Validators.email
+  ] ),
+ role:new FormControl('',[
+    Validators.required,] ),
+  
+motDePasse: new FormControl('',[
+    Validators.required
+  ]),
+agence:new FormControl('',[
+    Validators.required,] ),
+
+regionId:new FormControl('',[
+    Validators.required,] ),
+  
+}//controlos
+   
+   
+   
+   
+    this.participantForm = this.fb.group(controls);
   }
 
   ngOnInit(): void {

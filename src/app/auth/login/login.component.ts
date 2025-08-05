@@ -12,20 +12,18 @@ import { LoginService } from '../../service/login.service';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
- 
-  loginForm: FormGroup;
+ loginForm: FormGroup;
   showPassword = false;
   errorMessage = '';
-successMessage = '';
-
-
+  successMessage = '';
+role1:'' | undefined;
   constructor(
     private fb: FormBuilder,
     private _data: LoginService,
-    private router: Router  // ✅ injecte le Router
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
-      matricule: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
@@ -34,33 +32,35 @@ successMessage = '';
     this.showPassword = !this.showPassword;
   }
 
-  onSubmit() {
+ onSubmit() {
   if (this.loginForm.valid) {
-    const { matricule, password } = this.loginForm.value;
+    const { email, password } = this.loginForm.value;
 
-    this._data.login({ username: matricule, password }).subscribe({
-      next: (response) => {
-        if (response.success) {
-          const role = localStorage.getItem('role');
+    this._data.login({ email, password }).subscribe({
+      next: (res) => {
+        // ✅ Stocker les tokens d'abord
+        localStorage.setItem('jwt', res.access_token);
+        localStorage.setItem('refresh_token', res.refresh_token);
 
-          this.successMessage = 'Connexion réussie !';
-          this.errorMessage = ''; // on vide l'erreur si succès
+        // ✅ Ensuite, on peut lire le rôle depuis le token
+        const role = this._data.getRoleFromToken();
+        console.log("Rôle :", role);
 
-          if (role === 'ADMIN') {
-            this.router.navigate(['home/dashbordadmin']);
-          } else if (role === 'SALARIE'|| role === 'AGENT') {
-            this.router.navigate(['home/dahpoPar']);
-          } else {
-            this.router.navigate(['/']);
-          }
+        this.successMessage = 'Connexion réussie !';
+        this.errorMessage = '';
+
+        // ✅ Redirection selon le rôle
+        if (role === 'ADMIN') {
+          this.router.navigate(['home/dashbordadmin']);
+        } else if (role === 'SALARIE' || role === 'AGENT') {
+          this.router.navigate(['home/dahpoPar']);
         } else {
-          this.errorMessage = 'Nom d\'utilisateur ou mot de passe incorrect.';
-          this.successMessage = '';
+          this.router.navigate(['/']);
         }
       },
       error: (err) => {
         console.error(err);
-        this.errorMessage = 'Erreur serveur.';
+        this.errorMessage = 'Nom d\'utilisateur ou mot de passe incorrect.';
         this.successMessage = '';
       }
     });

@@ -11,26 +11,50 @@
         <!-- Nom -->
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Nom du Challenge</mat-label>
-          <input matInput placeholder="Ex: Challenge Printemps" formControlName="name" required>
+          <input matInput placeholder="Ex: Challenge Printemps" formControlName="name" required [ngClass]="{'from-form-control mt-2':true,'error':challengeForm.controls['name'].invalid && challengeForm.controls['name'].touched,'valid':challengeForm.controls['name'].valid && challengeForm.controls['name'].touched}" >
+           @if(challengeForm.controls['name'].invalid && challengeForm.controls['name'].touched){
+    <p class="text-danger">name invalid</p>
+  }
         </mat-form-field>
 
         <!-- Dates -->
         <div class="date-row">
           <mat-form-field appearance="fill" class="half-width">
             <mat-label>Date de Début</mat-label>
-            <input matInput type="date" formControlName="dateDebut" required>
+            <input matInput type="date" formControlName="dateDebut" [max]="today | date:'yyyy-MM-dd'" required [ngClass]="{'from-form-control mt-2':true,'error':challengeForm.controls['dateDebut'].invalid && challengeForm.controls['dateDebut'].touched,'valid':challengeForm.controls['dateDebut'].valid && challengeForm.controls['dateDebut'].touched}" >
+           @if(challengeForm.controls['dateDebut'].invalid && challengeForm.controls['dateDebut'].touched){
+    <p class="text-danger">date invalid</p>
+  }
+  <div *ngIf="challengeForm.errors?.['invalidstartdate']" class="errr">
+  {{ challengeForm.errors?.['invalidstartdate'] }}
+</div>
           </mat-form-field>
 
           <mat-form-field appearance="fill" class="half-width">
             <mat-label>Date de Fin</mat-label>
-            <input matInput type="date" formControlName="dateFin" required>
+            <input matInput type="date" formControlName="dateFin" required [ngClass]="{'from-form-control mt-2':true,'error':challengeForm.controls['dateFin'].invalid && challengeForm.controls['dateFin'].touched,'valid':challengeForm.controls['dateFin'].valid && challengeForm.controls['dateFin'].touched}" >
+           @if(challengeForm.controls['dateFin'].invalid && challengeForm.controls['dateFin'].touched){
+    <p class="text-danger">date invalid</p>
+  }
+
+
+<div *ngIf="challengeForm.errors?.['invalidRange']" class="errr">
+  {{ challengeForm.errors?.['invalidRange'] }}
+</div>
+<div *ngIf="challengeForm.errors?.['invalidEndDate']" class="errr">
+  {{ challengeForm.errors?.['invalidEndDate'] }}
+</div>
+  
           </mat-form-field>
         </div>
 
         <!-- Description -->
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Description</mat-label>
-          <textarea matInput formControlName="description" rows="1"></textarea>
+          <textarea matInput formControlName="description" rows="1" [ngClass]="{'from-form-control mt-2':true,'error':challengeForm.controls['description'].invalid && challengeForm.controls['description'].touched,'valid':challengeForm.controls['description'].valid && challengeForm.controls['description'].touched}"></textarea>
+           @if(challengeForm.controls['description'].invalid && challengeForm.controls['description'].touched){
+    <p class="text-danger">date invalid</p>
+  }
         </mat-form-field>
 
         <!-- Concerners -->
@@ -41,6 +65,10 @@
               {{ c.name }}
             </mat-option>
           </mat-select>
+                 @if(challengeForm.controls['concerners'].invalid && challengeForm.controls['concerners'].touched){
+    <p class="text-danger">date invalid</p>
+  }
+  
         </mat-form-field>
 
         <div class="button-row">

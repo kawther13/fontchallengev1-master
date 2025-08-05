@@ -47,3 +47,7 @@
 .w-100 {
   width: 100%;
 }
+.errr {
+  color: red;
+  font-size: 0.9em;
+}

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule,AbstractControl, Validators ,FormControl,ValidationErrors} from '@angular/forms';
 import { Concerner } from '../../models/concerner';
 
 import { ChallengeService } from '../../service/challenge.service';
@@ -40,7 +40,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrl: './add-challengee.component.css'
 })
 export class AddChallengeeComponent {
-
+today: Date = new Date();
  challengeForm!: FormGroup;
   availableConcerners: Concerner[] = [];   // ✅ Typé
 @Output() challengeCreated = new EventEmitter<number>();
@@ -50,16 +50,33 @@ export class AddChallengeeComponent {
     private concernerService: ConcernerService,
     private router: Router,
      private dialogRef: MatDialogRef<AddChallengeeComponent>
-  ) {}
+  ) {
+    let controls={ 
+      name: new FormControl('',[
+Validators.required,
+Validators.minLength(3),
+Validators.maxLength(10),
+
+Validators.pattern('^[A-Z][a-z]*$')
+
+  ] ),
+  dateDebut: new FormControl('',[
+Validators.required,
+
+  ] ), 
+dateFin:new FormControl('',[
+Validators.required] ), 
+description:new FormControl('',[
+Validators.required] ),
+concerners:new FormControl('',[
+Validators.required] )
+}  
+
+this.challengeForm = this.fb.group(controls, { validators: this.dateRangeValidator });
+  }
 
   ngOnInit(): void {
-    this.challengeForm = this.fb.group({
-      name: ['', Validators.required],
-      dateDebut: ['', Validators.required],
-      dateFin: ['', Validators.required],
-      description: [''],
-      concerners: [[]]   // tableau d'IDs de Concerner
-    });
+  
 
     this.loadConcerners();
   }
@@ -98,5 +115,31 @@ export class AddChallengeeComponent {
 
 onCancel(): void {
   this.dialogRef.close(); // Ferme simplement le dialog sans retourner de données
+}
+
+
+dateRangeValidator(control: AbstractControl): ValidationErrors | null {
+  const startDate = control.get('dateDebut')?.value;
+  const endDate = control.get('dateFin')?.value;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Réinitialiser l'heure pour comparaison
+
+  if (startDate && endDate) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Vérifier si la date de début est inférieure à la date de fin
+    if (start >= end) {
+      return { invalidRange: 'La date de début doit être inférieur à la date de fin' };
+    }
+
+     
+
+    // Vérifier si la date de fin est supérieure ou égale à aujourd'hui
+    if (end < today) {
+      return { invalidEndDate: 'La date de fin doit être aujourd\'hui ou dans le futur' };
+    }
+  }
+  return null;
 }
 }

@@ -12,6 +12,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { ConditionGain } from '../models/condition-gain';
 import { MatIconModule } from '@angular/material/icon';
+import { TypeContrat } from '../models/TypeContrat';
+import { TypeContratService } from '../service/type-contrat.service';
 
 @Component({
   selector: 'app-condition-gain',
@@ -35,13 +37,14 @@ export class ConditionGainComponent {
  // challengeId: number | null = null;
 
   roles = ['AGENT', 'SALARIE', 'CHEF_AGENCE', 'CHEF_REGION'];
-  contratTypes = ['FORFAITAIRE', 'RENOUVELABLE','annuel'];
+ typeContrats: TypeContrat[] = [];
   displayedColumns: string[] = ['role', 'typeContrat', 'nbrContrat', 'prime', 'actions'];
 @Input() challengeId!: number;
   constructor(
     private fb: FormBuilder,
     private conditionGainService: ConditionGainService,
-    private challengeService: ChallengeService
+    private challengeService: ChallengeService,
+    private typeContratService: TypeContratService
   ) {}
 
   ngOnInit(): void {
@@ -50,15 +53,22 @@ export class ConditionGainComponent {
     // ✅ Initialiser le formulaire réactif
     this.conditionGainForm = this.fb.group({
       role: ['', Validators.required],
-      typeContrat: ['', Validators.required],
+      typeContrat: [null, Validators.required],
       nbrContrat: [0, [Validators.required, Validators.min(0)]],
       prime: [0, [Validators.required, Validators.min(0)]]
     });
 
     if (this.challengeId) {
       this.loadConditions();
+     
     }
+     this.loadTypeContrats();
   }
+  loadTypeContrats(): void {
+  this.typeContratService.getAll().subscribe((data: TypeContrat[]) => {
+    this.typeContrats = data;
+  });
+}
 
   loadConditions(): void {
     this.conditionGainService.getByChallenge(this.challengeId!).subscribe((data: any) => {
@@ -78,7 +88,16 @@ export class ConditionGainComponent {
       return;
     }
 
-    const conditionData: ConditionGain = this.conditionGainForm.value;
+   // const conditionData: ConditionGain = this.conditionGainForm.value;
+  const formValue = this.conditionGainForm.value;
+
+const conditionData: ConditionGain = {
+  ...formValue,
+  typeContrat: { id: formValue.typeContrat }  // ✅ forme attendue
+};
+
+
+
     console.log(this.conditionGainForm.value);
 
     if (this.editingId) {
@@ -96,10 +115,15 @@ export class ConditionGainComponent {
     }
   }
 
-  edit(condition: ConditionGain): void {
-    this.conditionGainForm.patchValue(condition);
-    this.editingId = condition.id!;
-  }
+ edit(condition: ConditionGain): void {
+  this.conditionGainForm.patchValue({
+    role: condition.role,
+    typeContrat: condition.typeContrat.id,  // ✅ Important : on ne met que l'id ici
+    nbrContrat: condition.nbrContrat,
+    prime: condition.prime
+  });
+  this.editingId = condition.id!;
+}
 
   delete(id: number): void {
     if (confirm('Supprimer cette condition ?')) {

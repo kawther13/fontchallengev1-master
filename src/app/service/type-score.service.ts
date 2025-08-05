@@ -1,18 +1,18 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Pack } from '../models/pack';
+import { TypeScore } from '../models/TypeScore';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PackService {
+export class TypeScoreService {
 
- private baseUrl = 'http://localhost:8088/packs';
+ private apiUrl = 'http://localhost:8088/api/type-scores';
 
   constructor(private http: HttpClient) {}
 
-  // 🔐 Getter headers avec token JWT
+  // 🔐 Getter pour ajouter le token JWT
   private get headers() {
     const token = localStorage.getItem('jwt');
     return new HttpHeaders({
@@ -20,8 +20,9 @@ export class PackService {
     });
   }
 
-  // ✅ Récupérer tous les packs avec authentification
-  getAllPacks(): Observable<Pack[]> {
-    return this.http.get<Pack[]>(`${this.baseUrl}/all`, { headers: this.headers });
+  // ✅ Récupérer tous les types de scores
+  getAll(): Observable<TypeScore[]> {
+    return this.http.get<TypeScore[]>(this.apiUrl, { headers: this.headers });
   }
 }
+

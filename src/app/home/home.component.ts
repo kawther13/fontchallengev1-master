@@ -63,18 +63,15 @@ role: string = '';
       }
     });
   }*/
-   logout(){
- localStorage.removeItem('token');
- 
-  localStorage.removeItem('role');
-  localStorage.removeItem('userId');
-  localStorage.removeItem('username')
-this.router.navigate(['/login']).then(() => {
-  setTimeout(() => {
-    window.location.reload();
-  }, 100); // 100ms pour laisser le temps au navigateur d'enregistrer la suppression
-});
+  logout(): void {
+  // Supprimer uniquement les éléments réellement utilisés
+  localStorage.removeItem('jwt');
+  localStorage.removeItem('refresh_token');
+
+  // Rediriger vers login
+  window.location.href = '/login'; // plus rapide que navigate + reload
+}
+
 
 // lina juste 9a3da na3mel fi refrech lel app  w deja token tefskha kif iji  yedkhol yal9a gard moch bech ikhalih yedkhol  khter fmch token
     }
-}
